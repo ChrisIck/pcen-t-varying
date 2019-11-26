@@ -1,4 +1,18 @@
 import sed_eval
+import json
+import argparse
+
+
+URBANSED_CLASSES = ['air_conditioner',
+                    'car_horn',
+                    'children_playing',
+                    'dog_bark',
+                    'drilling',
+                    'engine_idling',
+                    'gun_shot',
+                    'jackhammer',
+                    'siren',
+                    'street_music']
 
 def score_model(test_idx, test_features, model, labels):
         
@@ -59,20 +73,45 @@ def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length =
             out_dicts.append(new_dict)
     return out_dicts
     
-if __name__=='__main__':
-    ### Evaluate model
-    print('Evaluate model...')
+def process_arguments(args):
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    parser.add_argument(dest='modelid', type=str,
+                        default='model_test',
+                        help='Model ID number, e.g. "model001"')
+    
+    parser.add_argument('--feature-dir', dest='feature_dir', type=str,
+                        default='/beegfs/ci411/pcen/features/test',
+                        help='Location to store features')
+    
+    parser.add_argument('--model-dir', dest='model_dir', type=str,
+                        default='/beegfs/ci411/pcen/models',
+                        help='Location to store models and weights')
+    
+    parser.add_argument('--index-loc', dest='index_loc', type=str,
+                       default='/beegfs/ci411/pcen/URBAN-SED_v2.0.0/index_test.json',
+                       help='Location of train/test split index')
+    
+
+    return parser.parse_args(args)
+
+
+if __name__ == '__main__':
+    params = process_arguments(sys.argv[1:])
+    
     # Load best params
+    weight_path = os.path.join(params.model_dir, params.modelid, 'model.h5')
     model.load_weights(weight_path)
 
-    with open(os.path.join(DATA_LOC, 'index_test.json'), 'r') as fp:
+    with open(params.index_loc), 'r') as fp:
         test_idx = json.load(fp)['id']
-
-    # Compute eval scores
-    results = score_model(test_idx, TEST_FEATURES_LOC, model, URBANSED_CLASSES)
+    
+    # Compute eval scores    
+    test_features = os.path.join(params.feature_dir, 'test')
+    results = score_model(test_idx, test_features, model, URBANSED_CLASSES)
 
     # Save results to disk
-    results_file = os.path.join(MODEL_LOC, modelid, 'results.json')
+    results_file = os.path.join(params.model_dir, params.modelid, 'results.json')
     with open(results_file, 'w') as fp:
         json.dump(results, fp, indent=2)
 

@@ -1,4 +1,5 @@
-import librosa as ls
+import numpy as np
+import librosa as lr
 import pescador
 from tqdm import tqdm
 import keras as K
@@ -6,10 +7,26 @@ from keras.engine.topology import Layer
 from keras.backend import squeeze
 import json
 import six
+import pickle
+import sys
+import os
+import argparse
 
 
 sys.path.append('..')
 from utils import *
+from models import MODELS
+
+URBANSED_CLASSES = ['air_conditioner',
+                    'car_horn',
+                    'children_playing',
+                    'dog_bark',
+                    'drilling',
+                    'engine_idling',
+                    'gun_shot',
+                    'jackhammer',
+                    'siren',
+                    'street_music']
 
 def make_sampler(max_samples, duration, pump, seed):
 
@@ -26,32 +43,6 @@ def data_sampler(fname, sampler):
     for datum in file_sampler:
         yield datum
 
-class SqueezeLayer(Layer):
-    '''
-    Keras squeeze layer
-    '''
-    def __init__(self, axis=-1, **kwargs):
-        super(SqueezeLayer, self).__init__(**kwargs)
-        self.axis = axis
-
-    def get_output_shape_for(self, input_shape):
-        # shape = np.array(input_shape)
-        # shape = shape[shape != 1]
-        # return tuple(shape)
-        shape = list(input_shape)
-        del shape[self.axis]
-        return tuple(shape)
-
-    def compute_output_shape(self, input_shape):
-        return self.get_output_shape_for(input_shape)
-
-    def call(self, x, mask=None):
-        return squeeze(x, axis=self.axis)
-
-    def get_config(self):
-        config = {'axis': self.axis}
-        base_config = super(SqueezeLayer, self).get_config()
-        return dict(list(base_config.items()) + list(config.items()))
     
 def data_generator(working, sampler, k, rate, batch_size=32, **kwargs):
     '''Generate a data stream from a collection of tracks and a sampler'''
@@ -123,37 +114,107 @@ class LossHistory(K.callbacks.Callback):
         with open(self.outfile, 'wb') as fp:
             pickle.dump(loss_dict, fp)
 
-'''   
-i/o
-modelid = 'model00'
-reduce_lr = 10
-early_stopping = 10
-max_samples = 128
-duration = 10
-seed = 20170612
-model = ?
-train_streamers = 64
-rate=4
-verbose = True
-epoch_size = 512
-epochs = 5
-validation_size = 1024
-'''
-if __name__=='__main__'
 
-    sampler = make_sampler(max_samples, duration, pump, seed)
+def process_arguments(args):
+    parser = argparse.ArgumentParser(description=__doc__)
 
-    construct_model = #TODO model construction
+    parser.add_argument('--max_samples', dest='max_samples', type=int,
+                        default=128,
+                        help='Maximum number of samples to draw per streamer')
+
+    parser.add_argument('--patch-duration', dest='duration', type=float,
+                        default=10.0,
+                        help='Duration (in seconds) of training patches')
+
+    parser.add_argument('--seed', dest='seed', type=int,
+                        default='20170612',
+                        help='Seed for the random number generator')
+
+    parser.add_argument('--train-streamers', dest='train_streamers', type=int,
+                        default=64,
+                        help='Number of active training streamers')
+
+    parser.add_argument('--batch-size', dest='batch_size', type=int,
+                        default=16,
+                        help='Size of training batches')
+
+    parser.add_argument('--rate', dest='rate', type=int,
+                        default=4,
+                        help='Rate of pescador stream deactivation')
+
+    parser.add_argument('--epochs', dest='epochs', type=int,
+                        default=150,
+                        help='Maximum number of epochs to train for')
+
+    parser.add_argument('--epoch-size', dest='epoch_size', type=int,
+                        default=512,
+                        help='Number of batches per epoch')
+
+    parser.add_argument('--validation-size', dest='validation_size', type=int,
+                        default=1024,
+                        help='Number of batches per validation')
+
+    parser.add_argument('--early-stopping', dest='early_stopping', type=int,
+                        default=30,
+                        help='# epochs without improvement to stop')
+
+    parser.add_argument('--reduce-lr', dest='reduce_lr', type=int,
+                        default=10,
+                        help='# epochs before reducing learning rate')
+
+    parser.add_argument('--verbose', dest='verbose', action='store_const',
+                        const=True, default=False,
+                        help='Call keras fit with verbose mode (1)')
+
+    parser.add_argument('--model-name', dest='modelname', type=str,
+                        default='cnnl3_7_strong',
+                        help='Name of model to train')
+
+    parser.add_argument('--model-id', dest='modelid', type=str,
+                        default='model_test',
+                        help='Model ID number, e.g. "model001"')
+    
+    parser.add_argument('--feature-dir', dest='feature_dir', type=str,
+                        default='/beegfs/ci411/pcen/features/test',
+                        help='Location to store features')
+    
+    parser.add_argument('--model-dir', dest='model_dir', type=str,
+                        default='/beegfs/ci411/pcen/models',
+                        help='Location to store models and weights')
+    
+    parser.add_argument('--load-pump', dest='load_pump', type=str,
+                        default='/beegfs/ci411/pcen/pumps/test',
+                        help='Directory containing pump file')
+    
+
+    return parser.parse_args(args)
+
+
+if __name__ == '__main__':
+    params = process_arguments(sys.argv[1:])
+    
+    #make or clear output directory
+    make_dirs(os.path.join(params.model_dir, params.modelid))
+    
+    #get feature paths
+    train_features = os.path.join(params.feature_dir, 'train')
+    valid_features = os.path.join(params.feature_dir, 'validate')
+    test_features = os.path.join(params.feature_dir, 'test')
+    
+    pump = load_pump(os.path.join(params.load_pump, 'pump.pkl'))
+    sampler = make_sampler(params.max_samples, params.duration, pump, params.seed)
+
+    construct_model = MODELS[params.modelname]
     model, inputs, outputs = construct_model(pump)    
     
-    gen_train = data_generator(TRAIN_FEATURES_LOC, sampler, train_streamers,\
-                           rate, random_state=seed)
+    gen_train = data_generator(train_features, sampler, params.train_streamers,\
+                           params.rate, random_state=params.seed)
 
     output_vars = 'dynamic/tags'
     gen_train = keras_tuples(gen_train(), inputs=inputs, outputs=output_vars)
 
-    gen_val = data_generator(VALIDATE_FEATURES_LOC, sampler, train_streamers,\
-                               rate, random_state=seed)
+    gen_val = data_generator(valid_features, sampler, params.train_streamers,\
+                               params.rate, random_state=params.seed)
     gen_val = keras_tuples(gen_val(), inputs=inputs, outputs=output_vars)
 
     loss = {output_vars: 'binary_crossentropy'}
@@ -168,20 +229,22 @@ if __name__=='__main__'
     # Store the model
     # save the model object
     model_spec = K.utils.serialize_keras_object(model)
-
-    with open(os.path.join(MODEL_LOC, modelid, 'model_spec.pkl'),\
+    with open(os.path.join(params.model_dir, params.modelid, 'model_spec.pkl'),\
               'wb') as fd:
         pickle.dump(model_spec, fd)
 
     # save the model definition
     '''
-    modeljsonfile = os.path.join(MODEL_LOC, modelid, 'model.json')
+    modeljsonfile = os.path.join(params.model_dir, params.modelid, 'model.json')
     model_json = model.to_json()
     with open(modeljsonfile, 'w') as json_file:
         json.dump(model_json, json_file, indent=2)
     '''
+    #save the model object
+    
+    
     # Construct the weight path
-    weight_path = os.path.join(MODEL_LOC, modelid, 'model.h5')
+    weight_path = os.path.join(params.model_dir, params.modelid, 'model.h5')
 
     # Build the callbacks
     cb = []
@@ -190,35 +253,35 @@ if __name__=='__main__'
                                           verbose=1,
                                           monitor=monitor))
 
-    cb.append(K.callbacks.ReduceLROnPlateau(patience=reduce_lr,
+    cb.append(K.callbacks.ReduceLROnPlateau(patience=params.reduce_lr,
                                             verbose=1,
                                             monitor=monitor))
 
-    cb.append(K.callbacks.EarlyStopping(patience=early_stopping,
+    cb.append(K.callbacks.EarlyStopping(patience=params.early_stopping,
                                         verbose=1,
                                         monitor=monitor))
 
-    history_checkpoint = os.path.join(MODEL_LOC, modelid,
+    history_checkpoint = os.path.join(params.model_dir, params.modelid,
                                       'history_checkpoint.pkl')
     cb.append(LossHistory(history_checkpoint))
 
-    history_csvlog = os.path.join(MODEL_LOC, modelid, 'history_csvlog.csv')
+    history_csvlog = os.path.join(params.model_dir, params.modelid, 'history_csvlog.csv')
     cb.append(K.callbacks.CSVLogger(history_csvlog, append=True,
                                     separator=','))
     
     print('Fit model...')
-    if verbose:
+    if params.verbose:
         verbosity = 1
     else:
         verbosity = 2
-    history = model.fit_generator(gen_train_label, epoch_size, epochs,
+    history = model.fit_generator(gen_train_label, params.epoch_size, params.epochs,
                                   validation_data=gen_val_label,
-                                  validation_steps=validation_size,
+                                  validation_steps=params.validation_size,
                                   verbose=verbosity, callbacks=cb)
 
     print('Done training. Saving results to disk...')
     # Save history
-    with open(os.path.join(MODEL_LOC, modelid, 'history.pkl'), 'wb') as fd:
+    with open(os.path.join(params.model_dir, modelid, 'history.pkl'), 'wb') as fd:
         pickle.dump(history.history, fd)
     print('Saving Weights')
     model.save_weights(weight_path)
