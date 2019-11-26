@@ -78,17 +78,6 @@ def keras_tuples(gen, inputs=None, outputs=None):
             for datum in gen:
                 yield ([datum[i] for i in inputs],
                        [datum[o] for o in outputs])
-                
-                
-def max_pool(data, N=4):
-    for _ in range(N):
-        N_data, n_channels = data.shape
-        new_data = np.empty((N_data//2,n_channels))
-        for i in range((N_data//2)):
-            for j in range(n_channels):
-                new_data[i,j] = max(data[2*i,j], data[(2*i)+1,j])
-        data = new_data
-    return np.array([data])
 
 def label_transformer_generator(generator):
     for data in generator:
@@ -234,13 +223,10 @@ if __name__ == '__main__':
         pickle.dump(model_spec, fd)
 
     # save the model definition
-    '''
-    modeljsonfile = os.path.join(params.model_dir, params.modelid, 'model.json')
-    model_json = model.to_json()
-    with open(modeljsonfile, 'w') as json_file:
-        json.dump(model_json, json_file, indent=2)
-    '''
-    #save the model object
+    modelyamlfile = os.path.join(params.model_dir, params.modelid, 'model.yaml')
+    model_yaml = model.to_yaml()
+    with open(modelyamlfile, 'w') as yaml_file:
+        yaml_file.write(model_yaml)
     
     
     # Construct the weight path

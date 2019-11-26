@@ -1,6 +1,12 @@
 import sed_eval
 import json
 import argparse
+from keras.models import model_from_yaml
+import sys
+
+sys.path.append('..')
+from utils import *
+from models import SqueezeLayer
 
 
 URBANSED_CLASSES = ['air_conditioner',
@@ -76,7 +82,7 @@ def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length =
 def process_arguments(args):
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument(dest='modelid', type=str,
+    parser.add_argument('--model-id', dest='modelid', type=str,
                         default='model_test',
                         help='Model ID number, e.g. "model001"')
     
@@ -99,11 +105,17 @@ def process_arguments(args):
 if __name__ == '__main__':
     params = process_arguments(sys.argv[1:])
     
+    # Load model architecture
+    modelyamlfile = os.path.join(params.model_dir, params.modelid, 'model.yaml')
+    with open(modelyamlfile, 'r') as yaml_file:
+        model_yaml = yaml_file.read()
+    model = model_from_yaml(model_yaml, custom_objects={'SqueezeLayer':SqueezeLayer})
+    
     # Load best params
     weight_path = os.path.join(params.model_dir, params.modelid, 'model.h5')
     model.load_weights(weight_path)
 
-    with open(params.index_loc), 'r') as fp:
+    with open(params.index_loc, 'r') as fp:
         test_idx = json.load(fp)['id']
     
     # Compute eval scores    
