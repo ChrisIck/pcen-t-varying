@@ -2,6 +2,7 @@ import os
 import shutil
 import h5py
 import pickle
+import numpy as np
 from librosa.util import find_files
 
 def base(filename):
@@ -103,3 +104,13 @@ def make_dirs(loc):
     else:
         shutil.rmtree(loc)
         os.makedirs(loc)  
+
+def max_pool(data, N=4):
+    for _ in range(N):
+        N_data, n_channels = data.shape
+        new_data = np.empty((N_data//2,n_channels))
+        for i in range((N_data//2)):
+            for j in range(n_channels):
+                new_data[i,j] = max(data[2*i,j], data[(2*i)+1,j])
+        data = new_data
+    return np.array([data])

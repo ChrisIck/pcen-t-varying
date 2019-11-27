@@ -41,6 +41,7 @@ def data_sampler(fname, sampler):
     '''Generate samples from a specified h5 file'''
     file_sampler = sampler(load_h5(fname))
     for datum in file_sampler:
+        #modify code here?
         yield datum
 
     
@@ -267,7 +268,7 @@ if __name__ == '__main__':
 
     print('Done training. Saving results to disk...')
     # Save history
-    with open(os.path.join(params.model_dir, modelid, 'history.pkl'), 'wb') as fd:
+    with open(os.path.join(params.model_dir, params.modelid, 'history.pkl'), 'wb') as fd:
         pickle.dump(history.history, fd)
     print('Saving Weights')
     model.save_weights(weight_path)

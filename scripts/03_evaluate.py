@@ -52,6 +52,13 @@ def score_model(test_idx, test_features, model, labels):
     # Or print all metrics as reports
     print(segment_based_metrics)
     print(event_based_metrics)
+    
+    segment_results = segment_based_metrics.results()
+    event_results = event_based_metrics.results()
+    full_results = {'segment_based_metrics':segment_results,\
+                    'event_based_metrics':event_results}
+    return full_results
+
 
 def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length = 10.):
     predictions = predictions.T
@@ -121,9 +128,10 @@ if __name__ == '__main__':
     # Compute eval scores    
     test_features = os.path.join(params.feature_dir, 'test')
     results = score_model(test_idx, test_features, model, URBANSED_CLASSES)
-
+        
     # Save results to disk
     results_file = os.path.join(params.model_dir, params.modelid, 'results.json')
+    print("Saving results to {}".format(results_file))
     with open(results_file, 'w') as fp:
         json.dump(results, fp, indent=2)
 
