@@ -11,6 +11,8 @@ import pickle
 import sys
 import os
 import argparse
+import ast
+from keras.layers import Input
 
 
 sys.path.append('..')
@@ -36,23 +38,28 @@ def make_sampler(max_samples, duration, pump, seed):
 
     return pump.sampler(max_samples, n_frames, random_state=seed)
 
-
-def data_sampler(fname, sampler):
+@pescador.streamable
+def data_sampler(fname, sampler, slices):
     '''Generate samples from a specified h5 file'''
     file_sampler = sampler(load_h5(fname))
     for datum in file_sampler:
-        #modify code here?
-        yield datum
+        if slices is not None:
+            data = datum['PCEN/mag']
+            data_sliced = data[:,:,:,slices]
+            datum['PCEN/mag'] = data_sliced
+            yield datum
+        else:
+            yield datum
 
     
-def data_generator(working, sampler, k, rate, batch_size=32, **kwargs):
+def data_generator(working, sampler, k, rate, batch_size=32, slices=None, **kwargs):
     '''Generate a data stream from a collection of tracks and a sampler'''
 
     seeds = []
 
     for track in tqdm(find_files(working,ext='h5')):
         fname = os.path.join(working,track)
-        seeds.append(pescador.Streamer(data_sampler, fname, sampler))
+        seeds.append(data_sampler(fname, sampler, slices))
 
     # Send it all to a mux
     mux = pescador.StochasticMux(seeds, k, rate, mode='with_replacement', **kwargs)
@@ -108,6 +115,13 @@ class LossHistory(K.callbacks.Callback):
 def process_arguments(args):
     parser = argparse.ArgumentParser(description=__doc__)
 
+    parser.add_argument('--slices', dest='slices', type=str,
+                        default=None,
+                        help='Slices to keep for training')
+    
+    parser.add_argument('--nmels', dest='n_mels', type=float, default=128,
+                        help='Number of bins in Mel Spectrogram')
+    
     parser.add_argument('--max_samples', dest='max_samples', type=int,
                         default=128,
                         help='Maximum number of samples to draw per streamer')
@@ -193,18 +207,26 @@ if __name__ == '__main__':
     
     pump = load_pump(os.path.join(params.load_pump, 'pump.pkl'))
     sampler = make_sampler(params.max_samples, params.duration, pump, params.seed)
-
-    construct_model = MODELS[params.modelname]
-    model, inputs, outputs = construct_model(pump)    
     
+    if params.slices is not None:
+        slices = ast.literal_eval(params.slices)
+    else:
+        slices = params.slices
+        
+    construct_model = MODELS[params.modelname]
+    
+    input_layer = Input(name='PCEN/mag',  shape=(None, params.n_mels, len(slices)),\
+                              dtype='float32')    
+    model, inputs, outputs = construct_model(input_layer, pump)    
+        
     gen_train = data_generator(train_features, sampler, params.train_streamers,\
-                           params.rate, random_state=params.seed)
+                           params.rate, random_state=params.seed, slices=slices)
 
     output_vars = 'dynamic/tags'
     gen_train = keras_tuples(gen_train(), inputs=inputs, outputs=output_vars)
 
     gen_val = data_generator(valid_features, sampler, params.train_streamers,\
-                               params.rate, random_state=params.seed)
+                         params.rate, random_state=params.seed, slices=slices)
     gen_val = keras_tuples(gen_val(), inputs=inputs, outputs=output_vars)
 
     loss = {output_vars: 'binary_crossentropy'}
