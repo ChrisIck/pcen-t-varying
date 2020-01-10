@@ -3,6 +3,8 @@ import json
 import argparse
 from keras.models import model_from_yaml
 import sys
+import numpy as np
+import ast
 
 sys.path.append('..')
 from utils import *
@@ -20,17 +22,19 @@ URBANSED_CLASSES = ['air_conditioner',
                     'siren',
                     'street_music']
 
-def score_model(test_idx, test_features, model, labels):
+def score_model(test_idx, test_features, model, labels, slices=None):
         
     segment_based_metrics = sed_eval.sound_event.SegmentBasedMetrics(
-        event_label_list=labels)
-    event_based_metrics = sed_eval.sound_event.EventBasedMetrics(
         event_label_list=labels)
 
     for filename in test_idx:
         test_feature_loc = os.path.join(test_features, filename + '.h5')
         test_feature = load_h5(test_feature_loc)
-        datum = test_feature['PCEN/mag']
+        if slices is not None:
+            datum = test_feature['PCEN/mag'][:,:,:,slices]
+        else:
+            datum = test_feature['PCEN/mag']
+            
         ytrue = max_pool(test_feature['dynamic/tags'][0])[0]
         ypred = model.predict(datum)[0]
         
@@ -40,24 +44,16 @@ def score_model(test_idx, test_features, model, labels):
         segment_based_metrics.evaluate(reference_event_list=ytrue_dict,\
                                        estimated_event_list=ypred_dict)
 
-        event_based_metrics.evaluate(reference_event_list=ytrue_dict,\
-                                     estimated_event_list=ypred_dict)
-        
-
-
     # Get only certain metrics
     overall_segment_based_metrics = segment_based_metrics.results_overall_metrics()
     print("Accuracy:", overall_segment_based_metrics['accuracy']['accuracy'])
 
     # Or print all metrics as reports
     print(segment_based_metrics)
-    print(event_based_metrics)
     
     segment_results = segment_based_metrics.results()
-    event_results = event_based_metrics.results()
-    full_results = {'segment_based_metrics':segment_results,\
-                    'event_based_metrics':event_results}
-    return full_results
+
+    return segment_results
 
 
 def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length = 10.):
@@ -88,6 +84,10 @@ def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length =
     
 def process_arguments(args):
     parser = argparse.ArgumentParser(description=__doc__)
+    
+    parser.add_argument('--slices', dest='slices', type=str,
+                        default=None,
+                        help='Slices to keep for training')
 
     parser.add_argument('--model-id', dest='modelid', type=str,
                         default='model_test',
@@ -127,7 +127,13 @@ if __name__ == '__main__':
     
     # Compute eval scores    
     test_features = os.path.join(params.feature_dir, 'test')
-    results = score_model(test_idx, test_features, model, URBANSED_CLASSES)
+    
+    if params.slices is not None:
+        slices = ast.literal_eval(params.slices)
+    else:
+        slices = params.slices
+        
+    results = score_model(test_idx, test_features, model, URBANSED_CLASSES, slices=slices)
         
     # Save results to disk
     results_file = os.path.join(params.model_dir, params.modelid, 'results.json')

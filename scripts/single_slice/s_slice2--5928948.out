@@ -1,0 +1,388 @@
+2019-12-02 09:28:49.198812: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /share/apps/anaconda3/4.3.1/lib:/share/apps/cudnn/8.0v6.0/lib64:/share/apps/cuda/8.0.44/extras/CUPTI/lib64:/share/apps/cuda/8.0.44/lib64:/share/apps/centos/7/usr/lib64:/opt/slurm/lib64
+2019-12-02 09:28:49.198855: E tensorflow/stream_executor/cuda/cuda_driver.cc:318] failed call to cuInit: UNKNOWN ERROR (303)
+2019-12-02 09:28:49.198878: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (c38-11): /proc/driver/nvidia/version does not exist
+2019-12-02 09:28:49.205962: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3000150000 Hz
+2019-12-02 09:28:49.206129: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x56a2340 executing computations on platform Host. Devices:
+2019-12-02 09:28:49.206146: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+Using TensorFlow backend.
+  0%|          | 0/6000 [00:00<?, ?it/s] 62%|██████▎   | 3750/6000 [00:00<00:00, 37487.52it/s]100%|██████████| 6000/6000 [00:00<00:00, 51345.20it/s]
+  0%|          | 0/2000 [00:00<?, ?it/s]100%|██████████| 2000/2000 [00:00<00:00, 136615.61it/s]Fit model...
+Epoch 1/150
+ - 181s - loss: 0.2819 - accuracy: 0.8916 - val_loss: 0.3412 - val_accuracy: 0.8586
+Epoch 2/150
+ - 178s - loss: 0.1727 - accuracy: 0.9393 - val_loss: 0.3509 - val_accuracy: 0.8820
+Epoch 3/150
+ - 178s - loss: 0.1674 - accuracy: 0.9431 - val_loss: 0.1712 - val_accuracy: 0.8586
+Epoch 4/150
+ - 177s - loss: 0.1526 - accuracy: 0.9492 - val_loss: 0.2031 - val_accuracy: 0.8598
+Epoch 5/150
+ - 178s - loss: 0.1615 - accuracy: 0.9457 - val_loss: 0.1526 - val_accuracy: 0.8916
+Epoch 6/150
+ - 177s - loss: 0.1454 - accuracy: 0.9520 - val_loss: 0.0634 - val_accuracy: 0.8905
+Epoch 7/150
+ - 177s - loss: 0.1366 - accuracy: 0.9557 - val_loss: 0.1103 - val_accuracy: 0.8856
+Epoch 8/150
+ - 177s - loss: 0.1363 - accuracy: 0.9556 - val_loss: 0.5400 - val_accuracy: 0.8927
+Epoch 9/150
+ - 178s - loss: 0.1302 - accuracy: 0.9593 - val_loss: 0.3010 - val_accuracy: 0.8931
+Epoch 10/150
+ - 178s - loss: 0.1375 - accuracy: 0.9555 - val_loss: 0.1280 - val_accuracy: 0.8993
+Epoch 11/150
+ - 178s - loss: 0.1400 - accuracy: 0.9537 - val_loss: 0.1605 - val_accuracy: 0.8951
+Epoch 12/150
+ - 178s - loss: 0.1379 - accuracy: 0.9539 - val_loss: 0.5066 - val_accuracy: 0.8926
+Epoch 13/150
+ - 178s - loss: 0.1372 - accuracy: 0.9556 - val_loss: 0.0519 - val_accuracy: 0.8912
+Epoch 14/150
+ - 179s - loss: 0.1309 - accuracy: 0.9576 - val_loss: 0.0590 - val_accuracy: 0.8906
+Epoch 15/150
+ - 178s - loss: 0.1491 - accuracy: 0.9507 - val_loss: 0.5303 - val_accuracy: 0.8867
+Epoch 16/150
+ - 178s - loss: 0.1321 - accuracy: 0.9575 - val_loss: 0.7329 - val_accuracy: 0.8988
+Epoch 17/150
+ - 178s - loss: 0.1421 - accuracy: 0.9539 - val_loss: 0.5094 - val_accuracy: 0.8897
+Epoch 18/150
+ - 178s - loss: 0.1338 - accuracy: 0.9586 - val_loss: 0.6843 - val_accuracy: 0.8820
+Epoch 19/150
+ - 178s - loss: 0.1385 - accuracy: 0.9547 - val_loss: 0.3499 - val_accuracy: 0.8924
+Epoch 20/150
+ - 177s - loss: 0.1066 - accuracy: 0.9685 - val_loss: 0.4739 - val_accuracy: 0.9003
+Epoch 21/150
+ - 176s - loss: 0.1125 - accuracy: 0.9655 - val_loss: 0.3583 - val_accuracy: 0.8901
+Epoch 22/150
+ - 177s - loss: 0.1422 - accuracy: 0.9530 - val_loss: 0.0678 - val_accuracy: 0.8975
+Epoch 23/150
+ - 176s - loss: 0.1236 - accuracy: 0.9608 - val_loss: 0.4297 - val_accuracy: 0.8914
+Epoch 24/150
+ - 177s - loss: 0.1133 - accuracy: 0.9651 - val_loss: 0.1725 - val_accuracy: 0.8997
+Epoch 25/150
+ - 176s - loss: 0.1219 - accuracy: 0.9600 - val_loss: 0.2061 - val_accuracy: 0.8919
+Epoch 26/150
+ - 177s - loss: 0.1226 - accuracy: 0.9609 - val_loss: 0.2824 - val_accuracy: 0.8989
+Epoch 27/150
+ - 177s - loss: 0.1251 - accuracy: 0.9607 - val_loss: 0.3276 - val_accuracy: 0.8966
+Epoch 28/150
+ - 177s - loss: 0.1231 - accuracy: 0.9611 - val_loss: 0.4203 - val_accuracy: 0.8958
+Epoch 29/150
+ - 177s - loss: 0.1229 - accuracy: 0.9606 - val_loss: 0.2581 - val_accuracy: 0.8985
+Epoch 30/150
+ - 177s - loss: 0.1236 - accuracy: 0.9611 - val_loss: 0.3981 - val_accuracy: 0.9076
+Epoch 31/150
+ - 177s - loss: 0.1174 - accuracy: 0.9628 - val_loss: 0.4444 - val_accuracy: 0.9019
+Epoch 32/150
+ - 177s - loss: 0.1326 - accuracy: 0.9573 - val_loss: 0.4497 - val_accuracy: 0.8962
+Epoch 33/150
+ - 177s - loss: 0.1447 - accuracy: 0.9529 - val_loss: 0.1621 - val_accuracy: 0.8988
+Epoch 34/150
+ - 177s - loss: 0.1238 - accuracy: 0.9618 - val_loss: 0.1218 - val_accuracy: 0.8991
+Epoch 35/150
+ - 177s - loss: 0.1337 - accuracy: 0.9571 - val_loss: 0.2817 - val_accuracy: 0.8847
+Epoch 36/150
+ - 177s - loss: 0.1122 - accuracy: 0.9643 - val_loss: 0.2825 - val_accuracy: 0.8997
+Epoch 37/150
+ - 177s - loss: 0.1405 - accuracy: 0.9532 - val_loss: 0.5601 - val_accuracy: 0.8968
+Epoch 38/150
+ - 177s - loss: 0.1170 - accuracy: 0.9647 - val_loss: 0.0659 - val_accuracy: 0.9055
+Epoch 39/150
+ - 177s - loss: 0.1400 - accuracy: 0.9534 - val_loss: 0.3757 - val_accuracy: 0.8958
+Epoch 40/150
+ - 177s - loss: 0.1364 - accuracy: 0.9562 - val_loss: 0.0520 - val_accuracy: 0.8961
+Epoch 41/150
+ - 180s - loss: 0.1173 - accuracy: 0.9620 - val_loss: 0.2510 - val_accuracy: 0.9052
+Epoch 42/150
+ - 181s - loss: 0.1301 - accuracy: 0.9593 - val_loss: 0.6510 - val_accuracy: 0.9005
+Epoch 43/150
+ - 180s - loss: 0.1400 - accuracy: 0.9539 - val_loss: 0.5052 - val_accuracy: 0.8959
+Epoch 44/150
+ - 181s - loss: 0.1388 - accuracy: 0.9546 - val_loss: 0.2765 - val_accuracy: 0.8903
+Epoch 45/150
+ - 181s - loss: 0.1240 - accuracy: 0.9619 - val_loss: 0.1315 - val_accuracy: 0.8970
+Epoch 46/150
+ - 179s - loss: 0.1434 - accuracy: 0.9537 - val_loss: 0.3664 - val_accuracy: 0.9040
+Epoch 47/150
+ - 180s - loss: 0.1587 - accuracy: 0.9461 - val_loss: 0.1477 - val_accuracy: 0.9067
+Epoch 48/150
+ - 181s - loss: 0.1158 - accuracy: 0.9632 - val_loss: 0.1548 - val_accuracy: 0.9084
+Epoch 49/150
+ - 179s - loss: 0.1712 - accuracy: 0.9401 - val_loss: 0.4495 - val_accuracy: 0.8966
+Epoch 50/150
+ - 179s - loss: 0.1364 - accuracy: 0.9565 - val_loss: 0.3801 - val_accuracy: 0.8906
+Epoch 51/150
+ - 177s - loss: 0.1510 - accuracy: 0.9490 - val_loss: 0.0241 - val_accuracy: 0.8979
+Epoch 52/150
+ - 177s - loss: 0.1509 - accuracy: 0.9488 - val_loss: 0.0551 - val_accuracy: 0.8973
+Epoch 53/150
+ - 177s - loss: 0.1530 - accuracy: 0.9482 - val_loss: 0.4322 - val_accuracy: 0.9009
+Epoch 54/150
+ - 178s - loss: 0.1469 - accuracy: 0.9513 - val_loss: 0.1197 - val_accuracy: 0.8935
+Epoch 55/150
+ - 182s - loss: 0.1747 - accuracy: 0.9396 - val_loss: 0.4226 - val_accuracy: 0.9034
+Epoch 56/150
+ - 182s - loss: 0.1241 - accuracy: 0.9587 - val_loss: 0.3671 - val_accuracy: 0.9018
+Epoch 57/150
+ - 180s - loss: 0.1379 - accuracy: 0.9532 - val_loss: 0.3667 - val_accuracy: 0.9046
+Epoch 58/150
+ - 177s - loss: 0.1425 - accuracy: 0.9523 - val_loss: 0.3783 - val_accuracy: 0.9036
+Epoch 59/150
+ - 179s - loss: 0.1382 - accuracy: 0.9544 - val_loss: 0.2951 - val_accuracy: 0.9069
+Epoch 60/150
+ - 181s - loss: 0.1438 - accuracy: 0.9497 - val_loss: 0.2686 - val_accuracy: 0.8917
+Epoch 61/150
+ - 181s - loss: 0.1577 - accuracy: 0.9445 - val_loss: 0.4530 - val_accuracy: 0.8950
+Epoch 62/150
+ - 182s - loss: 0.1464 - accuracy: 0.9502 - val_loss: 0.3259 - val_accuracy: 0.9093
+Epoch 63/150
+ - 180s - loss: 0.1461 - accuracy: 0.9504 - val_loss: 0.4120 - val_accuracy: 0.9069
+Epoch 64/150
+ - 176s - loss: 0.1462 - accuracy: 0.9519 - val_loss: 0.1852 - val_accuracy: 0.8925
+Epoch 65/150
+ - 176s - loss: 0.1528 - accuracy: 0.9469 - val_loss: 0.0449 - val_accuracy: 0.8989
+Epoch 66/150
+ - 176s - loss: 0.1783 - accuracy: 0.9367 - val_loss: 0.1223 - val_accuracy: 0.9005
+Epoch 67/150
+ - 177s - loss: 0.1630 - accuracy: 0.9420 - val_loss: 0.4576 - val_accuracy: 0.9100
+Epoch 68/150
+ - 177s - loss: 0.1677 - accuracy: 0.9392 - val_loss: 0.0064 - val_accuracy: 0.8885
+Epoch 69/150
+ - 177s - loss: 0.1450 - accuracy: 0.9504 - val_loss: 0.4127 - val_accuracy: 0.9002
+Epoch 70/150
+ - 177s - loss: 0.1627 - accuracy: 0.9426 - val_loss: 0.4721 - val_accuracy: 0.8991
+Epoch 71/150
+ - 176s - loss: 0.1571 - accuracy: 0.9444 - val_loss: 0.2910 - val_accuracy: 0.9003
+Epoch 72/150
+ - 177s - loss: 0.1574 - accuracy: 0.9447 - val_loss: 0.1603 - val_accuracy: 0.9081
+Epoch 73/150
+ - 177s - loss: 0.1449 - accuracy: 0.9491 - val_loss: 0.3952 - val_accuracy: 0.9084
+Epoch 74/150
+ - 176s - loss: 0.1584 - accuracy: 0.9449 - val_loss: 0.5817 - val_accuracy: 0.9019
+Epoch 75/150
+ - 177s - loss: 0.1550 - accuracy: 0.9463 - val_loss: 0.5220 - val_accuracy: 0.9043
+Epoch 76/150
+ - 177s - loss: 0.1803 - accuracy: 0.9336 - val_loss: 0.3864 - val_accuracy: 0.8979
+Epoch 77/150
+ - 177s - loss: 0.1624 - accuracy: 0.9425 - val_loss: 0.4992 - val_accuracy: 0.8984
+Epoch 78/150
+ - 177s - loss: 0.1478 - accuracy: 0.9472 - val_loss: 0.2532 - val_accuracy: 0.9075
+Epoch 79/150
+ - 178s - loss: 0.1389 - accuracy: 0.9513 - val_loss: 0.4451 - val_accuracy: 0.9037
+Epoch 80/150
+ - 181s - loss: 0.1280 - accuracy: 0.9564 - val_loss: 0.1991 - val_accuracy: 0.9027
+Epoch 81/150
+ - 181s - loss: 0.1489 - accuracy: 0.9471 - val_loss: 0.1583 - val_accuracy: 0.9038
+Epoch 82/150
+ - 182s - loss: 0.1514 - accuracy: 0.9458 - val_loss: 0.2965 - val_accuracy: 0.9054
+Epoch 83/150
+ - 181s - loss: 0.1514 - accuracy: 0.9482 - val_loss: 0.5702 - val_accuracy: 0.9049
+Epoch 84/150
+ - 181s - loss: 0.1682 - accuracy: 0.9399 - val_loss: 0.0413 - val_accuracy: 0.9015
+Epoch 85/150
+ - 181s - loss: 0.1436 - accuracy: 0.9496 - val_loss: 0.1608 - val_accuracy: 0.9026
+Epoch 86/150
+ - 181s - loss: 0.1421 - accuracy: 0.9515 - val_loss: 0.2477 - val_accuracy: 0.8987
+Epoch 87/150
+ - 181s - loss: 0.1580 - accuracy: 0.9444 - val_loss: 0.2247 - val_accuracy: 0.9093
+Epoch 88/150
+ - 180s - loss: 0.1455 - accuracy: 0.9501 - val_loss: 0.4807 - val_accuracy: 0.9080
+Epoch 89/150
+ - 181s - loss: 0.1513 - accuracy: 0.9480 - val_loss: 0.4172 - val_accuracy: 0.8964
+Epoch 90/150
+ - 181s - loss: 0.1511 - accuracy: 0.9486 - val_loss: 0.4153 - val_accuracy: 0.9114
+Epoch 91/150
+ - 181s - loss: 0.1355 - accuracy: 0.9527 - val_loss: 0.5610 - val_accuracy: 0.9037
+Epoch 92/150
+ - 181s - loss: 0.1460 - accuracy: 0.9488 - val_loss: 0.2235 - val_accuracy: 0.9046
+Epoch 93/150
+ - 181s - loss: 0.1445 - accuracy: 0.9500 - val_loss: 0.5250 - val_accuracy: 0.9033
+Epoch 94/150
+ - 181s - loss: 0.1415 - accuracy: 0.9518 - val_loss: 0.0632 - val_accuracy: 0.8989
+Epoch 95/150
+ - 181s - loss: 0.1582 - accuracy: 0.9443 - val_loss: 0.3190 - val_accuracy: 0.9043
+Epoch 96/150
+ - 180s - loss: 0.1777 - accuracy: 0.9358 - val_loss: 0.2286 - val_accuracy: 0.9060
+Epoch 97/150
+ - 181s - loss: 0.1816 - accuracy: 0.9316 - val_loss: 0.2697 - val_accuracy: 0.8999
+Epoch 98/150
+ - 181s - loss: 0.1715 - accuracy: 0.9370 - val_loss: 0.1990 - val_accuracy: 0.9090
+Epoch 99/150
+ - 180s - loss: 0.1796 - accuracy: 0.9343 - val_loss: 0.1146 - val_accuracy: 0.9080
+Epoch 100/150
+ - 181s - loss: 0.1642 - accuracy: 0.9392 - val_loss: 0.2835 - val_accuracy: 0.9017
+Epoch 101/150
+ - 181s - loss: 0.1531 - accuracy: 0.9441 - val_loss: 0.3038 - val_accuracy: 0.8968
+Epoch 102/150
+ - 181s - loss: 0.1576 - accuracy: 0.9439 - val_loss: 0.3722 - val_accuracy: 0.8994
+Epoch 103/150
+ - 181s - loss: 0.1406 - accuracy: 0.9506 - val_loss: 0.1733 - val_accuracy: 0.9094
+Epoch 104/150
+ - 180s - loss: 0.1623 - accuracy: 0.9432 - val_loss: 0.1702 - val_accuracy: 0.9087
+Epoch 105/150
+ - 181s - loss: 0.1563 - accuracy: 0.9446 - val_loss: 0.5143 - val_accuracy: 0.9071
+Epoch 106/150
+ - 180s - loss: 0.1395 - accuracy: 0.9511 - val_loss: 0.4132 - val_accuracy: 0.9029
+Epoch 107/150
+ - 182s - loss: 0.1780 - accuracy: 0.9360 - val_loss: 0.3077 - val_accuracy: 0.8999
+Epoch 108/150
+ - 181s - loss: 0.1558 - accuracy: 0.9446 - val_loss: 0.3146 - val_accuracy: 0.9070
+Epoch 109/150
+ - 181s - loss: 0.1623 - accuracy: 0.9418 - val_loss: 0.4073 - val_accuracy: 0.9071
+Epoch 110/150
+ - 180s - loss: 0.1636 - accuracy: 0.9420 - val_loss: 0.3518 - val_accuracy: 0.8992
+Epoch 111/150
+ - 180s - loss: 0.1640 - accuracy: 0.9407 - val_loss: 0.4314 - val_accuracy: 0.9097
+Epoch 112/150
+ - 181s - loss: 0.1608 - accuracy: 0.9409 - val_loss: 0.0072 - val_accuracy: 0.9019
+Epoch 113/150
+ - 181s - loss: 0.1596 - accuracy: 0.9428 - val_loss: 0.2403 - val_accuracy: 0.9067
+Epoch 114/150
+ - 181s - loss: 0.1513 - accuracy: 0.9445 - val_loss: 0.3998 - val_accuracy: 0.8984
+Epoch 115/150
+ - 182s - loss: 0.1553 - accuracy: 0.9441 - val_loss: 0.1929 - val_accuracy: 0.9052
+Epoch 116/150
+ - 179s - loss: 0.1708 - accuracy: 0.9387 - val_loss: 0.2676 - val_accuracy: 0.9007
+Epoch 117/150
+ - 181s - loss: 0.1787 - accuracy: 0.9347 - val_loss: 0.2487 - val_accuracy: 0.9061
+Epoch 118/150
+ - 181s - loss: 0.1588 - accuracy: 0.9429 - val_loss: 0.2915 - val_accuracy: 0.9036
+Epoch 119/150
+ - 181s - loss: 0.1698 - accuracy: 0.9369 - val_loss: 0.5023 - val_accuracy: 0.9053
+Epoch 120/150
+ - 183s - loss: 0.1727 - accuracy: 0.9347 - val_loss: 0.2934 - val_accuracy: 0.9041
+Epoch 121/150
+ - 177s - loss: 0.1775 - accuracy: 0.9324 - val_loss: 0.0502 - val_accuracy: 0.9099
+Epoch 122/150
+ - 180s - loss: 0.1641 - accuracy: 0.9395 - val_loss: 0.5408 - val_accuracy: 0.9085
+Epoch 123/150
+ - 179s - loss: 0.1625 - accuracy: 0.9408 - val_loss: 0.4599 - val_accuracy: 0.9015
+Epoch 124/150
+ - 180s - loss: 0.1843 - accuracy: 0.9315 - val_loss: 0.1470 - val_accuracy: 0.9039
+Epoch 125/150
+ - 181s - loss: 0.1592 - accuracy: 0.9413 - val_loss: 0.6316 - val_accuracy: 0.8980
+Epoch 126/150
+ - 181s - loss: 0.1716 - accuracy: 0.9391 - val_loss: 0.4294 - val_accuracy: 0.9079
+Epoch 127/150
+ - 177s - loss: 0.1621 - accuracy: 0.9406 - val_loss: 0.1769 - val_accuracy: 0.9013
+Epoch 128/150
+ - 176s - loss: 0.1739 - accuracy: 0.9360 - val_loss: 0.0537 - val_accuracy: 0.9034
+Epoch 129/150
+ - 176s - loss: 0.1581 - accuracy: 0.9437 - val_loss: 0.5672 - val_accuracy: 0.9017
+Epoch 130/150
+ - 177s - loss: 0.1603 - accuracy: 0.9418 - val_loss: 0.4327 - val_accuracy: 0.9024
+Epoch 131/150
+ - 176s - loss: 0.1589 - accuracy: 0.9419 - val_loss: 0.4298 - val_accuracy: 0.8992
+Epoch 132/150
+ - 176s - loss: 0.1541 - accuracy: 0.9431 - val_loss: 0.2433 - val_accuracy: 0.9066
+Epoch 133/150
+ - 177s - loss: 0.1588 - accuracy: 0.9423 - val_loss: 0.2087 - val_accuracy: 0.8941
+Epoch 134/150
+ - 177s - loss: 0.1741 - accuracy: 0.9381 - val_loss: 0.6041 - val_accuracy: 0.9101
+Epoch 135/150
+ - 177s - loss: 0.1905 - accuracy: 0.9283 - val_loss: 0.3567 - val_accuracy: 0.9104
+Epoch 136/150
+ - 176s - loss: 0.1635 - accuracy: 0.9394 - val_loss: 0.1887 - val_accuracy: 0.9009
+Epoch 137/150
+ - 177s - loss: 0.1473 - accuracy: 0.9481 - val_loss: 0.1104 - val_accuracy: 0.9094
+Epoch 138/150
+ - 176s - loss: 0.1370 - accuracy: 0.9503 - val_loss: 0.2590 - val_accuracy: 0.9103
+Epoch 139/150
+ - 176s - loss: 0.1654 - accuracy: 0.9378 - val_loss: 0.1093 - val_accuracy: 0.9011
+Epoch 140/150
+ - 177s - loss: 0.1642 - accuracy: 0.9390 - val_loss: 0.1896 - val_accuracy: 0.9086
+Epoch 141/150
+ - 176s - loss: 0.1759 - accuracy: 0.9349 - val_loss: 0.3487 - val_accuracy: 0.9055
+Epoch 142/150
+ - 177s - loss: 0.1647 - accuracy: 0.9388 - val_loss: 0.4969 - val_accuracy: 0.9051
+Epoch 143/150
+ - 176s - loss: 0.1948 - accuracy: 0.9257 - val_loss: 0.1576 - val_accuracy: 0.8968
+Epoch 144/150
+ - 177s - loss: 0.1857 - accuracy: 0.9310 - val_loss: 0.0964 - val_accuracy: 0.9010
+Epoch 145/150
+ - 177s - loss: 0.1794 - accuracy: 0.9316 - val_loss: 0.1003 - val_accuracy: 0.9038
+Epoch 146/150
+ - 176s - loss: 0.1918 - accuracy: 0.9278 - val_loss: 0.0663 - val_accuracy: 0.9033
+Epoch 147/150
+ - 177s - loss: 0.1690 - accuracy: 0.9373 - val_loss: 0.3422 - val_accuracy: 0.9070
+Epoch 148/150
+ - 177s - loss: 0.1845 - accuracy: 0.9319 - val_loss: 0.1497 - val_accuracy: 0.9072
+Epoch 149/150
+ - 177s - loss: 0.1534 - accuracy: 0.9434 - val_loss: 0.3224 - val_accuracy: 0.9159
+Epoch 150/150
+ - 177s - loss: 0.1722 - accuracy: 0.9372 - val_loss: 0.3671 - val_accuracy: 0.9094
+
+../utils.py:56: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with val_dynamic/tags_acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:1042: RuntimeWarning: Reduce LR on plateau conditioned on metric `val_dynamic/tags_acc` which is not available. Available metrics are: val_loss,val_accuracy,loss,accuracy,lr
+  (self.monitor, ','.join(list(logs.keys()))), RuntimeWarning
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:846: RuntimeWarning: Early stopping conditioned on metric `val_dynamic/tags_acc` which is not available. Available metrics are: val_loss,val_accuracy,loss,accuracy,lr
+  (self.monitor, ','.join(list(logs.keys()))), RuntimeWarning
+Done training. Saving results to disk...
+Saving Weights
+2019-12-02 16:55:35.953141: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /share/apps/anaconda3/4.3.1/lib:/share/apps/cudnn/8.0v6.0/lib64:/share/apps/cuda/8.0.44/extras/CUPTI/lib64:/share/apps/cuda/8.0.44/lib64:/share/apps/centos/7/usr/lib64:/opt/slurm/lib64
+2019-12-02 16:55:35.953319: E tensorflow/stream_executor/cuda/cuda_driver.cc:318] failed call to cuInit: UNKNOWN ERROR (303)
+2019-12-02 16:55:35.953350: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (c38-11): /proc/driver/nvidia/version does not exist
+2019-12-02 16:55:35.960279: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3000150000 Hz
+2019-12-02 16:55:35.960457: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x540a7d0 executing computations on platform Host. Devices:
+2019-12-02 16:55:35.960474: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+Using TensorFlow backend.
+../utils.py:56: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+Accuracy: 0.8661790899767906
+Segment based metrics
+========================================
+  Evaluated length                  : 17864.53 sec
+  Evaluated files                   : 2000 
+  Segment length                    : 1.00 sec
+
+  Overall metrics (micro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 51.86 %
+    Precision                       : 56.22 %
+    Recall                          : 48.14 %
+  Error rate
+    Error rate (ER)                 : 0.67 
+    Substitution rate               : 0.22 
+    Deletion rate                   : 0.30 
+    Insertion rate                  : 0.16 
+  Accuracy
+    Sensitivity                     : 48.14 %
+    Specificity                     : 93.40 %
+    Balanced accuracy               : 70.77 %
+    Accuracy                        : 86.62 %
+
+  Class-wise average metrics (macro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 51.97 %
+    Precision                       : 58.48 %
+    Recall                          : 47.82 %
+  Error rate
+    Error rate (ER)                 : 0.89 
+    Deletion rate                   : 0.52 
+    Insertion rate                  : 0.37 
+  Accuracy
+    Sensitivity                     : 47.82 %
+    Specificity                     : 93.36 %
+    Balanced accuracy               : 70.59 %
+    Accuracy                        : 86.62 %
+  
+
+  Class-wise metrics
+  ======================================
+    Event label  | Nref    Nsys  | F        Pre      Rec    | ER       Del      Ins    | Sens     Spec     Bacc     Acc     
+    ------------ | -----   ----- | ------   ------   ------ | ------   ------   ------ | ------   ------   ------   ------  
+    air_condit.. | 2798    2694  | 41.7%    42.5%    41.0%  | 1.14     0.59     0.55   | 41.0%    90.2%    65.6%    82.7%   
+    car_horn     | 2328    1542  | 55.3%    69.5%    46.0%  | 0.74     0.54     0.20   | 46.0%    97.1%    71.5%    90.7%   
+    children_p.. | 2997    3009  | 43.1%    43.0%    43.1%  | 1.14     0.57     0.57   | 43.1%    89.0%    66.0%    81.5%   
+    dog_bark     | 2740    2062  | 50.2%    58.5%    44.0%  | 0.87     0.56     0.31   | 44.0%    94.6%    69.3%    87.1%   
+    drilling     | 2912    2312  | 56.5%    63.8%    50.7%  | 0.78     0.49     0.29   | 50.7%    94.6%    72.7%    87.7%   
+    engine_idl.. | 3009    3509  | 55.6%    51.7%    60.3%  | 0.96     0.40     0.56   | 60.3%    89.1%    74.7%    84.4%   
+    gun_shot     | 2385    1187  | 46.8%    70.4%    35.1%  | 0.80     0.65     0.15   | 35.1%    97.8%    66.4%    89.7%   
+    jackhammer   | 2780    2183  | 64.3%    73.1%    57.4%  | 0.64     0.43     0.21   | 57.4%    96.3%    76.8%    90.4%   
+    siren        | 2911    2466  | 60.7%    66.2%    56.1%  | 0.73     0.44     0.29   | 56.1%    94.7%    75.4%    88.6%   
+    street_music | 2889    2794  | 45.3%    46.1%    44.6%  | 1.08     0.55     0.52   | 44.6%    90.4%    67.5%    83.2%   
+
+
+Saving results to /beegfs/ci411/pcen/models/model_single_2/results.json
+Done!
