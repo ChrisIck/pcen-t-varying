@@ -30,7 +30,7 @@ class SqueezeLayer(Layer):
         base_config = super(SqueezeLayer, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))            
             
-def construct_cnnL3_7_strong(pump):
+def construct_cnnL3_7_strong(input_layer, pump):
     '''
     Like cnnL3_7 but with strong prediction
     Parameters
@@ -40,14 +40,14 @@ def construct_cnnL3_7_strong(pump):
     -------
     '''
     model_inputs = ['PCEN/mag']
-
-    # Build the input layer
+    
+    # Extract inputs
     layers = pump.layers()
 
     x_mag = layers['PCEN/mag']
-    
+   
     # Apply batch normalization
-    x_bn = K.layers.BatchNormalization()(x_mag)
+    x_bn = K.layers.BatchNormalization()(input_layer)
 
 
     # BLOCK 1
@@ -111,21 +111,18 @@ def construct_cnnL3_7_strong(pump):
     sq2 = SqueezeLayer(axis=2)(bn8) #changed axis from -2 to 2
 
     # Up-sample back to input frame rate
-    #sq2_up = K.layers.UpSampling1D(size=2**4)(sq2)
 
     n_classes = pump.fields['static/tags'].shape[0]
 
     p0 = K.layers.Dense(n_classes, activation='sigmoid',
                         bias_regularizer=K.regularizers.l2())
 
-    p_dynamic = K.layers.TimeDistributed(p0, name='dynamic/tags')(sq2)#_up)
+    p_dynamic = K.layers.TimeDistributed(p0, name='dynamic/tags')(sq2)
 
-   # p_static = K.layers.GlobalMaxPooling1D(name='static/tags')(p_dynamic)
+    model_outputs = ['dynamic/tags']
 
-    model_outputs = ['dynamic/tags']#, 'static/tags']
-
-    model = K.models.Model([x_mag],
-                           [p_dynamic])#, p_static])
+    #model = K.models.Model([x_mag], [p_dynamic])
+    model = K.models.Model([input_layer], [p_dynamic])
 
     return model, model_inputs, model_outputs
 

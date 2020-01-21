@@ -103,7 +103,14 @@ def make_dirs(loc):
         os.makedirs(loc)
     else:
         shutil.rmtree(loc)
-        os.makedirs(loc)  
+        os.makedirs(loc) 
+        
+def build_dirs(loc):
+    '''
+    checks if 'loc' exists and passes, otherwise, create it
+    '''
+    if not os.path.isdir(loc):
+        os.makedirs(loc)
 
 def max_pool(data, N=4):
     for _ in range(N):
