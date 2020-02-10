@@ -19,10 +19,10 @@ from collections import OrderedDict
 from keras.models import model_from_yaml
 
 
-sys.path.append('..')
-from utils import * 
-from models import MODELS
-from models import SqueezeLayer
+from pcen_t.utils import * 
+from pcen_t.models import MODELS, SqueezeLayer
+from pcen_t import pcen_pump
+sys.modules['pcen_pump'] = pcen_pump
 
 
 def score_model(OUTPUT_PATH, pump, model, idx, pumpfolder, labelfile, duration,
@@ -147,19 +147,19 @@ def score_model(OUTPUT_PATH, pump, model, idx, pumpfolder, labelfile, duration,
         segment_based_metrics.evaluate(ref_list, est_list)
 
     # Compute weak metrics
-    weak_true = np.asarray(weak_true)
-    weak_pred = np.asarray(weak_pred)
-    weak_pred = (weak_pred >= 0.5) * 1  # binarize
+    #weak_true = np.asarray(weak_true)
+    #weak_pred = np.asarray(weak_pred)
+    #weak_pred = (weak_pred >= 0.5) * 1  # binarize
 
-    results['weak'] = {}
-    for avg in ['micro', 'macro', 'weighted', 'samples']:
-        results['weak'][avg] = {}
-        results['weak'][avg]['f1'] = sklearn.metrics.f1_score(
-            weak_true, weak_pred, average=avg)
-        results['weak'][avg]['precision'] = sklearn.metrics.precision_score(
-            weak_true, weak_pred, average=avg)
-        results['weak'][avg]['recall'] = sklearn.metrics.recall_score(
-            weak_true, weak_pred, average=avg)
+    #results['weak'] = {}
+    #for avg in ['micro', 'macro', 'weighted', 'samples']:
+    #    results['weak'][avg] = {}
+    #    results['weak'][avg]['f1'] = sklearn.metrics.f1_score(
+    #        weak_true, weak_pred, average=avg)
+    #    results['weak'][avg]['precision'] = sklearn.metrics.precision_score(
+    #        weak_true, weak_pred, average=avg)
+    #    results['weak'][avg]['recall'] = sklearn.metrics.recall_score(
+    #        weak_true, weak_pred, average=avg)
 
     # results['weak']['f1_micro'] = sklearn.metrics.f1_score(
     #     weak_true, weak_pred, average='micro')
@@ -185,20 +185,17 @@ def report_results(OUTPUT_PATH, version):
 
     # report
     print('{:<10}{}'.format('Model', version))
-    print('\nWeak:')
-    for metric in ['precision', 'recall', 'f1']: #results['weak']['micro'].keys():
-        print('{:<10}{:.3f}'.format(metric, results['weak']['micro'][metric]))
 
     print('\nStrong:')
-    strong_f = results['strong']['overall']['f_measure']
-    strong_e = results['strong']['overall']['error_rate']
+    strong_f = results['overall']['f_measure']
+    strong_e = results['overall']['error_rate']
     print('{:<10}{:.3f}'.format('precision', strong_f['precision']))
     print('{:<10}{:.3f}'.format('recall', strong_f['recall']))
     print('{:<10}{:.3f}'.format('f1', strong_f['f_measure']))
     print('{:<10}{:.3f}'.format('e_rate', strong_e['error_rate']))
 
     print('\n{:<40}P\tR\tF\tE'.format('Strong per-class:'))
-    strong_c = results['strong']['class_wise']
+    strong_c = results['class_wise']
     c_sorted = [c for c in strong_c.keys()]
     c_sorted = sorted(c_sorted)
     for c in c_sorted:
@@ -235,9 +232,9 @@ def report_results(OUTPUT_PATH, version):
     plt.legend()
 
     plt.subplot(1,2,2)
-    plt.plot(history['static/tags_acc'], label='training accuracy')
-    plt.plot(history['val_static/tags_acc'], label='validation accuracy')
-    plt.axvline(np.argmax(history['val_static/tags_acc']), color='r')
+    plt.plot(history['accuracy'], label='training accuracy')
+    plt.plot(history['val_accuracy'], label='validation accuracy')
+    plt.axvline(np.argmax(history['accuracy']), color='r')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Accuracy: {}'.format(version))

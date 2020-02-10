@@ -1,0 +1,72 @@
+
+The following have been reloaded with a version change:
+  1) cuda/10.1.105 => cuda/10.0.130
+
+2020-02-07 16:58:35.411238: W tensorflow/stream_executor/platform/default/dso_loader.cc:55] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /share/apps/cudnn/10.0v7.6.2.24/lib64:/share/apps/cuda/10.0.130/extras/CUPTI/lib64:/share/apps/cuda/10.0.130/lib64:/share/apps/ffmpeg/3.2.2/intel/lib:/share/apps/zlib/1.2.8/intel/lib:/share/apps/intel/17.0.1/mkl/lib/intel64:/share/apps/intel/17.0.1/lib/intel64:/share/apps/numactl/2.0.11/gnu/lib:/share/apps/sox/14.4.2/intel/lib:/share/apps/anaconda3/4.3.1/lib:/share/apps/centos/7/usr/lib64:/opt/slurm/lib64
+2020-02-07 16:58:35.411280: E tensorflow/stream_executor/cuda/cuda_driver.cc:318] failed call to cuInit: UNKNOWN ERROR (303)
+2020-02-07 16:58:35.411303: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (c28-10): /proc/driver/nvidia/version does not exist
+2020-02-07 16:58:35.418460: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2999745000 Hz
+2020-02-07 16:58:35.418653: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x64c4260 executing computations on platform Host. Devices:
+2020-02-07 16:58:35.418673: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+Using TensorFlow backend.
+/home/ci411/pcen-t-varying/pcen_t/utils.py:63: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+Accuracy: 0.8539597100831379
+Segment based metrics
+========================================
+  Evaluated length                  : 18124.15 sec
+  Evaluated files                   : 2000 
+  Segment length                    : 1.00 sec
+
+  Overall metrics (micro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 44.55 %
+    Precision                       : 50.80 %
+    Recall                          : 39.67 %
+  Error rate
+    Error rate (ER)                 : 0.74 
+    Substitution rate               : 0.25 
+    Deletion rate                   : 0.35 
+    Insertion rate                  : 0.14 
+  Accuracy
+    Sensitivity                     : 39.67 %
+    Specificity                     : 93.33 %
+    Balanced accuracy               : 66.50 %
+    Accuracy                        : 85.40 %
+
+  Class-wise average metrics (macro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 43.35 %
+    Precision                       : 52.67 %
+    Recall                          : 39.80 %
+  Error rate
+    Error rate (ER)                 : 0.98 
+    Deletion rate                   : 0.60 
+    Insertion rate                  : 0.38 
+  Accuracy
+    Sensitivity                     : 39.80 %
+    Specificity                     : 93.31 %
+    Balanced accuracy               : 66.55 %
+    Accuracy                        : 85.40 %
+  
+
+  Class-wise metrics
+  ======================================
+    Event label  | Nref    Nsys  | F        Pre      Rec    | ER       Del      Ins    | Sens     Spec     Bacc     Acc     
+    ------------ | -----   ----- | ------   ------   ------ | ------   ------   ------ | ------   ------   ------   ------  
+    air_condit.. | 2798    3657  | 39.4%    34.8%    45.5%  | 1.40     0.55     0.85   | 45.5%    85.1%    65.3%    79.2%   
+    car_horn     | 2328    1356  | 52.2%    70.9%    41.3%  | 0.76     0.59     0.17   | 41.3%    97.6%    69.4%    90.6%   
+    children_p.. | 2997    1034  | 20.3%    39.6%    13.6%  | 1.07     0.86     0.21   | 13.6%    96.0%    54.8%    82.9%   
+    dog_bark     | 2740    2439  | 52.9%    56.2%    50.0%  | 0.89     0.50     0.39   | 50.0%    93.3%    71.7%    87.0%   
+    drilling     | 2912    2428  | 56.8%    62.4%    52.1%  | 0.79     0.48     0.31   | 52.1%    94.2%    73.2%    87.7%   
+    engine_idl.. | 3009    3796  | 50.3%    45.1%    56.9%  | 1.12     0.43     0.69   | 56.9%    86.8%    71.8%    82.0%   
+    gun_shot     | 2385    1749  | 53.2%    62.8%    46.1%  | 0.81     0.54     0.27   | 46.1%    96.0%    71.1%    89.7%   
+    jackhammer   | 2780    607   | 18.0%    50.2%    11.0%  | 1.00     0.89     0.11   | 11.0%    98.1%    54.5%    85.2%   
+    siren        | 2911    1773  | 43.0%    56.8%    34.6%  | 0.92     0.65     0.26   | 34.6%    95.2%    64.9%    85.8%   
+    street_music | 2889    2833  | 47.4%    47.9%    46.9%  | 1.04     0.53     0.51   | 46.9%    90.7%    68.8%    84.0%   
+
+
+Saving results to /beegfs/ci411/pcen/models/models_122/model122_dry_4/results_dry.json
+Done!
