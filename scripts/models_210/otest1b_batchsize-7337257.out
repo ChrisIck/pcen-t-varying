@@ -1,0 +1,557 @@
+
+The following have been reloaded with a version change:
+  1) cuda/10.1.105 => cuda/10.0.130
+
+2020-02-10 14:14:28.197422: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-02-10 14:14:28.246058: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 14:14:28.246635: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 14:14:28.248128: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 14:14:28.249672: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 14:14:28.250244: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 14:14:28.252094: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 14:14:28.253512: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 14:14:28.257301: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 14:14:28.259589: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 14:14:28.259885: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-02-10 14:14:28.266515: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2400000000 Hz
+2020-02-10 14:14:28.266689: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x6093900 executing computations on platform Host. Devices:
+2020-02-10 14:14:28.266706: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-02-10 14:14:28.382279: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x6095bf0 executing computations on platform CUDA. Devices:
+2020-02-10 14:14:28.382312: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Tesla V100-SXM2-16GB, Compute Capability 7.0
+2020-02-10 14:14:28.383601: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 14:14:28.383646: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 14:14:28.383659: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 14:14:28.383669: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 14:14:28.383680: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 14:14:28.383690: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 14:14:28.383701: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 14:14:28.383712: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 14:14:28.385980: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 14:14:28.386017: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 14:14:28.387888: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-02-10 14:14:28.387903: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-02-10 14:14:28.387908: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-02-10 14:14:28.390535: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15023 MB memory) -> physical GPU (device: 0, name: Tesla V100-SXM2-16GB, pci bus id: 0000:1c:00.0, compute capability: 7.0)
+Using TensorFlow backend.
+  0%|          | 0/6000 [00:00<?, ?it/s] 99%|█████████▉| 5962/6000 [00:00<00:00, 59618.07it/s]100%|██████████| 6000/6000 [00:00<00:00, 59764.66it/s]
+  0%|          | 0/2000 [00:00<?, ?it/s]100%|██████████| 2000/2000 [00:00<00:00, 236172.41it/s]2020-02-10 14:14:37.149818: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 14:14:37.416346: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 14:14:38.866530: W tensorflow/stream_executor/cuda/redzone_allocator.cc:312] Not found: ./bin/ptxas not found
+Relying on driver to perform ptx compilation. This message will be only logged once.
+/beegfs/ci411/pcen/pumps/full_test/pump.pkl
+Fit model...
+Epoch 1/150
+ - 33s - loss: 0.2942 - accuracy: 0.8882 - val_loss: 0.1878 - val_accuracy: 0.8791
+Epoch 2/150
+ - 28s - loss: 0.1813 - accuracy: 0.9359 - val_loss: 0.3498 - val_accuracy: 0.8807
+Epoch 3/150
+ - 28s - loss: 0.1714 - accuracy: 0.9410 - val_loss: 0.1489 - val_accuracy: 0.8700
+Epoch 4/150
+ - 28s - loss: 0.1516 - accuracy: 0.9490 - val_loss: 0.2137 - val_accuracy: 0.8958
+Epoch 5/150
+ - 27s - loss: 0.1586 - accuracy: 0.9453 - val_loss: 0.1508 - val_accuracy: 0.8879
+Epoch 6/150
+ - 28s - loss: 0.1429 - accuracy: 0.9525 - val_loss: 0.0637 - val_accuracy: 0.8932
+Epoch 7/150
+ - 28s - loss: 0.1340 - accuracy: 0.9566 - val_loss: 0.1500 - val_accuracy: 0.8801
+Epoch 8/150
+ - 27s - loss: 0.1322 - accuracy: 0.9571 - val_loss: 0.4787 - val_accuracy: 0.9021
+Epoch 9/150
+ - 28s - loss: 0.1249 - accuracy: 0.9598 - val_loss: 0.2460 - val_accuracy: 0.9000
+Epoch 10/150
+ - 28s - loss: 0.1311 - accuracy: 0.9581 - val_loss: 0.0936 - val_accuracy: 0.8940
+Epoch 11/150
+ - 28s - loss: 0.1385 - accuracy: 0.9539 - val_loss: 0.1673 - val_accuracy: 0.8982
+Epoch 12/150
+ - 28s - loss: 0.1348 - accuracy: 0.9556 - val_loss: 0.3411 - val_accuracy: 0.8940
+Epoch 13/150
+ - 28s - loss: 0.1361 - accuracy: 0.9556 - val_loss: 0.0426 - val_accuracy: 0.8913
+Epoch 14/150
+ - 28s - loss: 0.1298 - accuracy: 0.9575 - val_loss: 0.0955 - val_accuracy: 0.8417
+Epoch 15/150
+ - 28s - loss: 0.1425 - accuracy: 0.9528 - val_loss: 0.4733 - val_accuracy: 0.8918
+Epoch 16/150
+ - 28s - loss: 0.1267 - accuracy: 0.9592 - val_loss: 0.6419 - val_accuracy: 0.9063
+Epoch 17/150
+ - 28s - loss: 0.1327 - accuracy: 0.9572 - val_loss: 0.4800 - val_accuracy: 0.8922
+Epoch 18/150
+ - 28s - loss: 0.1215 - accuracy: 0.9628 - val_loss: 0.6258 - val_accuracy: 0.8784
+Epoch 19/150
+ - 28s - loss: 0.1311 - accuracy: 0.9571 - val_loss: 0.2220 - val_accuracy: 0.8991
+Epoch 20/150
+ - 28s - loss: 0.0989 - accuracy: 0.9710 - val_loss: 0.5645 - val_accuracy: 0.9002
+Epoch 21/150
+ - 27s - loss: 0.1089 - accuracy: 0.9668 - val_loss: 0.4448 - val_accuracy: 0.8924
+Epoch 22/150
+ - 28s - loss: 0.1397 - accuracy: 0.9542 - val_loss: 0.0556 - val_accuracy: 0.8955
+Epoch 23/150
+ - 27s - loss: 0.1163 - accuracy: 0.9634 - val_loss: 0.4702 - val_accuracy: 0.8974
+Epoch 24/150
+ - 28s - loss: 0.1159 - accuracy: 0.9636 - val_loss: 0.1203 - val_accuracy: 0.9048
+Epoch 25/150
+ - 27s - loss: 0.1164 - accuracy: 0.9619 - val_loss: 0.2337 - val_accuracy: 0.8873
+Epoch 26/150
+ - 27s - loss: 0.1224 - accuracy: 0.9606 - val_loss: 0.2583 - val_accuracy: 0.9019
+Epoch 27/150
+ - 28s - loss: 0.1223 - accuracy: 0.9614 - val_loss: 0.2327 - val_accuracy: 0.9022
+Epoch 28/150
+ - 28s - loss: 0.1222 - accuracy: 0.9614 - val_loss: 0.4044 - val_accuracy: 0.8979
+Epoch 29/150
+ - 27s - loss: 0.1109 - accuracy: 0.9652 - val_loss: 0.1439 - val_accuracy: 0.8986
+Epoch 30/150
+ - 27s - loss: 0.1185 - accuracy: 0.9629 - val_loss: 0.3544 - val_accuracy: 0.9077
+Epoch 31/150
+ - 28s - loss: 0.1172 - accuracy: 0.9626 - val_loss: 0.4863 - val_accuracy: 0.9005
+Epoch 32/150
+ - 28s - loss: 0.1254 - accuracy: 0.9594 - val_loss: 0.4966 - val_accuracy: 0.9024
+Epoch 33/150
+ - 28s - loss: 0.1303 - accuracy: 0.9571 - val_loss: 0.1587 - val_accuracy: 0.8970
+Epoch 34/150
+ - 28s - loss: 0.1164 - accuracy: 0.9633 - val_loss: 0.0607 - val_accuracy: 0.9013
+Epoch 35/150
+ - 28s - loss: 0.1274 - accuracy: 0.9597 - val_loss: 0.1906 - val_accuracy: 0.8889
+Epoch 36/150
+ - 28s - loss: 0.1060 - accuracy: 0.9662 - val_loss: 0.2104 - val_accuracy: 0.9025
+Epoch 37/150
+ - 28s - loss: 0.1284 - accuracy: 0.9583 - val_loss: 0.6486 - val_accuracy: 0.8994
+Epoch 38/150
+ - 28s - loss: 0.1162 - accuracy: 0.9645 - val_loss: 0.0469 - val_accuracy: 0.9083
+Epoch 39/150
+ - 28s - loss: 0.1384 - accuracy: 0.9536 - val_loss: 0.2956 - val_accuracy: 0.9023
+Epoch 40/150
+ - 28s - loss: 0.1356 - accuracy: 0.9553 - val_loss: 0.0362 - val_accuracy: 0.8964
+Epoch 41/150
+ - 28s - loss: 0.1183 - accuracy: 0.9603 - val_loss: 0.2648 - val_accuracy: 0.9077
+Epoch 42/150
+ - 28s - loss: 0.1276 - accuracy: 0.9593 - val_loss: 0.5562 - val_accuracy: 0.9026
+Epoch 43/150
+ - 28s - loss: 0.1272 - accuracy: 0.9589 - val_loss: 0.6436 - val_accuracy: 0.8991
+Epoch 44/150
+ - 28s - loss: 0.1316 - accuracy: 0.9570 - val_loss: 0.6663 - val_accuracy: 0.8963
+Epoch 45/150
+ - 28s - loss: 0.1227 - accuracy: 0.9612 - val_loss: 0.1171 - val_accuracy: 0.9035
+Epoch 46/150
+ - 28s - loss: 0.1328 - accuracy: 0.9558 - val_loss: 0.1971 - val_accuracy: 0.9066
+Epoch 47/150
+ - 28s - loss: 0.1404 - accuracy: 0.9530 - val_loss: 0.1507 - val_accuracy: 0.9046
+Epoch 48/150
+ - 28s - loss: 0.1154 - accuracy: 0.9634 - val_loss: 0.1418 - val_accuracy: 0.9070
+Epoch 49/150
+ - 29s - loss: 0.1498 - accuracy: 0.9502 - val_loss: 0.4782 - val_accuracy: 0.8973
+Epoch 50/150
+ - 28s - loss: 0.1373 - accuracy: 0.9567 - val_loss: 0.3179 - val_accuracy: 0.8962
+Epoch 51/150
+ - 28s - loss: 0.1370 - accuracy: 0.9544 - val_loss: 0.0263 - val_accuracy: 0.9025
+Epoch 52/150
+ - 28s - loss: 0.1424 - accuracy: 0.9517 - val_loss: 0.0609 - val_accuracy: 0.9033
+Epoch 53/150
+ - 28s - loss: 0.1459 - accuracy: 0.9504 - val_loss: 0.3571 - val_accuracy: 0.9058
+Epoch 54/150
+ - 28s - loss: 0.1292 - accuracy: 0.9585 - val_loss: 0.0234 - val_accuracy: 0.8994
+Epoch 55/150
+ - 28s - loss: 0.1428 - accuracy: 0.9525 - val_loss: 0.4472 - val_accuracy: 0.9051
+Epoch 56/150
+ - 28s - loss: 0.1004 - accuracy: 0.9678 - val_loss: 0.3898 - val_accuracy: 0.9045
+Epoch 57/150
+ - 28s - loss: 0.1131 - accuracy: 0.9623 - val_loss: 0.2288 - val_accuracy: 0.9021
+Epoch 58/150
+ - 28s - loss: 0.1298 - accuracy: 0.9570 - val_loss: 0.3355 - val_accuracy: 0.9036
+Epoch 59/150
+ - 30s - loss: 0.1241 - accuracy: 0.9589 - val_loss: 0.3465 - val_accuracy: 0.8966
+Epoch 60/150
+ - 29s - loss: 0.1308 - accuracy: 0.9556 - val_loss: 0.2779 - val_accuracy: 0.8985
+Epoch 61/150
+ - 28s - loss: 0.1300 - accuracy: 0.9571 - val_loss: 0.4007 - val_accuracy: 0.9022
+Epoch 62/150
+ - 28s - loss: 0.1325 - accuracy: 0.9559 - val_loss: 0.4017 - val_accuracy: 0.9087
+Epoch 63/150
+ - 28s - loss: 0.1227 - accuracy: 0.9600 - val_loss: 0.6162 - val_accuracy: 0.9106
+Epoch 64/150
+ - 28s - loss: 0.1287 - accuracy: 0.9593 - val_loss: 0.2168 - val_accuracy: 0.9001
+Epoch 65/150
+ - 28s - loss: 0.1240 - accuracy: 0.9586 - val_loss: 0.0473 - val_accuracy: 0.9078
+Epoch 66/150
+ - 29s - loss: 0.1592 - accuracy: 0.9448 - val_loss: 0.1928 - val_accuracy: 0.8814
+Epoch 67/150
+ - 28s - loss: 0.1600 - accuracy: 0.9427 - val_loss: 0.3613 - val_accuracy: 0.9121
+Epoch 68/150
+ - 28s - loss: 0.1396 - accuracy: 0.9515 - val_loss: 0.0197 - val_accuracy: 0.8974
+Epoch 69/150
+ - 28s - loss: 0.1226 - accuracy: 0.9577 - val_loss: 0.3798 - val_accuracy: 0.9030
+Epoch 70/150
+ - 29s - loss: 0.1464 - accuracy: 0.9495 - val_loss: 0.6082 - val_accuracy: 0.9006
+Epoch 71/150
+ - 29s - loss: 0.1326 - accuracy: 0.9558 - val_loss: 0.2944 - val_accuracy: 0.9082
+Epoch 72/150
+ - 32s - loss: 0.1257 - accuracy: 0.9595 - val_loss: 0.1574 - val_accuracy: 0.9055
+Epoch 73/150
+ - 29s - loss: 0.1197 - accuracy: 0.9599 - val_loss: 0.4340 - val_accuracy: 0.9096
+Epoch 74/150
+ - 28s - loss: 0.1231 - accuracy: 0.9600 - val_loss: 0.5379 - val_accuracy: 0.9050
+Epoch 75/150
+ - 29s - loss: 0.1407 - accuracy: 0.9523 - val_loss: 0.4840 - val_accuracy: 0.9080
+Epoch 76/150
+ - 29s - loss: 0.1414 - accuracy: 0.9510 - val_loss: 0.3233 - val_accuracy: 0.8994
+Epoch 77/150
+ - 29s - loss: 0.1558 - accuracy: 0.9449 - val_loss: 0.6233 - val_accuracy: 0.9044
+Epoch 78/150
+ - 28s - loss: 0.1399 - accuracy: 0.9522 - val_loss: 0.2999 - val_accuracy: 0.9088
+Epoch 79/150
+ - 28s - loss: 0.1243 - accuracy: 0.9577 - val_loss: 0.4174 - val_accuracy: 0.9062
+Epoch 80/150
+ - 28s - loss: 0.1132 - accuracy: 0.9616 - val_loss: 0.3582 - val_accuracy: 0.9046
+Epoch 81/150
+ - 28s - loss: 0.1158 - accuracy: 0.9609 - val_loss: 0.1372 - val_accuracy: 0.9081
+Epoch 82/150
+ - 28s - loss: 0.1282 - accuracy: 0.9578 - val_loss: 0.3436 - val_accuracy: 0.9097
+Epoch 83/150
+ - 28s - loss: 0.1263 - accuracy: 0.9585 - val_loss: 0.5926 - val_accuracy: 0.9035
+Epoch 84/150
+ - 28s - loss: 0.1445 - accuracy: 0.9509 - val_loss: 0.0673 - val_accuracy: 0.9004
+Epoch 85/150
+ - 28s - loss: 0.1181 - accuracy: 0.9605 - val_loss: 0.2174 - val_accuracy: 0.9014
+Epoch 86/150
+ - 28s - loss: 0.1233 - accuracy: 0.9583 - val_loss: 0.2517 - val_accuracy: 0.8979
+Epoch 87/150
+ - 28s - loss: 0.1238 - accuracy: 0.9592 - val_loss: 0.2179 - val_accuracy: 0.9111
+Epoch 88/150
+ - 28s - loss: 0.1242 - accuracy: 0.9591 - val_loss: 0.3810 - val_accuracy: 0.9085
+Epoch 89/150
+ - 28s - loss: 0.1272 - accuracy: 0.9587 - val_loss: 0.4565 - val_accuracy: 0.8991
+Epoch 90/150
+ - 28s - loss: 0.1283 - accuracy: 0.9590 - val_loss: 0.4443 - val_accuracy: 0.9140
+Epoch 91/150
+ - 28s - loss: 0.1113 - accuracy: 0.9627 - val_loss: 0.4760 - val_accuracy: 0.9088
+Epoch 92/150
+ - 28s - loss: 0.1300 - accuracy: 0.9565 - val_loss: 0.1500 - val_accuracy: 0.9049
+Epoch 93/150
+ - 28s - loss: 0.1256 - accuracy: 0.9572 - val_loss: 0.4487 - val_accuracy: 0.9063
+Epoch 94/150
+ - 28s - loss: 0.1302 - accuracy: 0.9567 - val_loss: 0.1437 - val_accuracy: 0.8921
+Epoch 95/150
+ - 28s - loss: 0.1331 - accuracy: 0.9543 - val_loss: 0.3551 - val_accuracy: 0.9064
+Epoch 96/150
+ - 28s - loss: 0.1397 - accuracy: 0.9528 - val_loss: 0.1873 - val_accuracy: 0.9053
+Epoch 97/150
+ - 28s - loss: 0.1324 - accuracy: 0.9547 - val_loss: 0.3079 - val_accuracy: 0.8982
+Epoch 98/150
+ - 29s - loss: 0.1383 - accuracy: 0.9524 - val_loss: 0.1880 - val_accuracy: 0.9069
+Epoch 99/150
+ - 28s - loss: 0.1460 - accuracy: 0.9501 - val_loss: 0.0680 - val_accuracy: 0.9099
+Epoch 100/150
+ - 30s - loss: 0.1375 - accuracy: 0.9535 - val_loss: 0.1336 - val_accuracy: 0.9080
+Epoch 101/150
+ - 30s - loss: 0.1254 - accuracy: 0.9560 - val_loss: 0.3399 - val_accuracy: 0.9041
+Epoch 102/150
+ - 30s - loss: 0.1343 - accuracy: 0.9545 - val_loss: 0.3148 - val_accuracy: 0.9018
+Epoch 103/150
+ - 30s - loss: 0.1118 - accuracy: 0.9632 - val_loss: 0.1916 - val_accuracy: 0.9104
+Epoch 104/150
+ - 29s - loss: 0.1437 - accuracy: 0.9506 - val_loss: 0.0505 - val_accuracy: 0.8986
+Epoch 105/150
+ - 29s - loss: 0.1337 - accuracy: 0.9544 - val_loss: 0.4335 - val_accuracy: 0.9122
+Epoch 106/150
+ - 29s - loss: 0.1239 - accuracy: 0.9582 - val_loss: 0.3292 - val_accuracy: 0.9033
+Epoch 107/150
+ - 29s - loss: 0.1485 - accuracy: 0.9491 - val_loss: 0.4897 - val_accuracy: 0.9066
+Epoch 108/150
+ - 28s - loss: 0.1332 - accuracy: 0.9546 - val_loss: 0.3551 - val_accuracy: 0.9064
+Epoch 109/150
+ - 28s - loss: 0.1327 - accuracy: 0.9549 - val_loss: 0.5285 - val_accuracy: 0.9080
+Epoch 110/150
+ - 29s - loss: 0.1256 - accuracy: 0.9587 - val_loss: 0.5836 - val_accuracy: 0.9010
+Epoch 111/150
+ - 28s - loss: 0.1322 - accuracy: 0.9546 - val_loss: 0.5532 - val_accuracy: 0.9087
+Epoch 112/150
+ - 28s - loss: 0.1281 - accuracy: 0.9555 - val_loss: 0.0319 - val_accuracy: 0.9029
+Epoch 113/150
+ - 28s - loss: 0.1369 - accuracy: 0.9531 - val_loss: 0.3228 - val_accuracy: 0.9066
+Epoch 114/150
+ - 28s - loss: 0.1284 - accuracy: 0.9546 - val_loss: 0.4248 - val_accuracy: 0.9059
+Epoch 115/150
+ - 28s - loss: 0.1319 - accuracy: 0.9555 - val_loss: 0.2524 - val_accuracy: 0.9047
+Epoch 116/150
+ - 29s - loss: 0.1364 - accuracy: 0.9548 - val_loss: 0.2514 - val_accuracy: 0.8964
+Epoch 117/150
+ - 29s - loss: 0.1652 - accuracy: 0.9425 - val_loss: 0.1618 - val_accuracy: 0.9045
+Epoch 118/150
+ - 29s - loss: 0.1416 - accuracy: 0.9499 - val_loss: 0.3628 - val_accuracy: 0.9026
+Epoch 119/150
+ - 28s - loss: 0.1478 - accuracy: 0.9468 - val_loss: 0.4817 - val_accuracy: 0.9032
+Epoch 120/150
+ - 28s - loss: 0.1384 - accuracy: 0.9508 - val_loss: 0.1729 - val_accuracy: 0.9003
+Epoch 121/150
+ - 28s - loss: 0.1380 - accuracy: 0.9511 - val_loss: 0.0208 - val_accuracy: 0.9077
+Epoch 122/150
+ - 28s - loss: 0.1444 - accuracy: 0.9502 - val_loss: 0.5300 - val_accuracy: 0.9056
+Epoch 123/150
+ - 28s - loss: 0.1293 - accuracy: 0.9556 - val_loss: 0.5347 - val_accuracy: 0.9023
+Epoch 124/150
+ - 28s - loss: 0.1430 - accuracy: 0.9509 - val_loss: 0.1364 - val_accuracy: 0.9015
+Epoch 125/150
+ - 28s - loss: 0.1193 - accuracy: 0.9589 - val_loss: 0.4617 - val_accuracy: 0.8984
+Epoch 126/150
+ - 28s - loss: 0.1484 - accuracy: 0.9500 - val_loss: 0.4435 - val_accuracy: 0.9061
+Epoch 127/150
+ - 29s - loss: 0.1390 - accuracy: 0.9508 - val_loss: 0.2303 - val_accuracy: 0.9012
+Epoch 128/150
+ - 29s - loss: 0.1422 - accuracy: 0.9506 - val_loss: 0.1222 - val_accuracy: 0.9088
+Epoch 129/150
+ - 29s - loss: 0.1303 - accuracy: 0.9554 - val_loss: 0.5649 - val_accuracy: 0.9021
+Epoch 130/150
+ - 29s - loss: 0.1320 - accuracy: 0.9549 - val_loss: 0.3997 - val_accuracy: 0.9004
+Epoch 131/150
+ - 28s - loss: 0.1396 - accuracy: 0.9518 - val_loss: 0.4136 - val_accuracy: 0.8969
+Epoch 132/150
+ - 28s - loss: 0.1394 - accuracy: 0.9514 - val_loss: 0.1859 - val_accuracy: 0.9043
+Epoch 133/150
+ - 28s - loss: 0.1544 - accuracy: 0.9452 - val_loss: 0.0836 - val_accuracy: 0.9072
+Epoch 134/150
+ - 29s - loss: 0.1490 - accuracy: 0.9492 - val_loss: 0.6025 - val_accuracy: 0.9119
+Epoch 135/150
+ - 29s - loss: 0.1578 - accuracy: 0.9429 - val_loss: 0.4329 - val_accuracy: 0.9111
+Epoch 136/150
+ - 29s - loss: 0.1227 - accuracy: 0.9577 - val_loss: 0.2158 - val_accuracy: 0.9054
+Epoch 137/150
+ - 28s - loss: 0.1196 - accuracy: 0.9602 - val_loss: 0.0680 - val_accuracy: 0.9034
+Epoch 138/150
+ - 29s - loss: 0.1131 - accuracy: 0.9617 - val_loss: 0.2999 - val_accuracy: 0.9106
+Epoch 139/150
+ - 29s - loss: 0.1230 - accuracy: 0.9581 - val_loss: 0.1216 - val_accuracy: 0.8995
+Epoch 140/150
+ - 29s - loss: 0.1236 - accuracy: 0.9575 - val_loss: 0.1787 - val_accuracy: 0.9062
+Epoch 141/150
+ - 29s - loss: 0.1373 - accuracy: 0.9522 - val_loss: 0.4602 - val_accuracy: 0.9081
+Epoch 142/150
+ - 29s - loss: 0.1246 - accuracy: 0.9570 - val_loss: 0.4307 - val_accuracy: 0.9049
+Epoch 143/150
+ - 29s - loss: 0.1440 - accuracy: 0.9486 - val_loss: 0.1548 - val_accuracy: 0.9018
+Epoch 144/150
+ - 28s - loss: 0.1386 - accuracy: 0.9521 - val_loss: 0.4734 - val_accuracy: 0.9026
+Epoch 145/150
+ - 29s - loss: 0.1355 - accuracy: 0.9520 - val_loss: 0.1189 - val_accuracy: 0.8990
+Epoch 146/150
+ - 29s - loss: 0.1365 - accuracy: 0.9529 - val_loss: 0.0997 - val_accuracy: 0.9069
+Epoch 147/150
+ - 28s - loss: 0.1193 - accuracy: 0.9596 - val_loss: 0.4549 - val_accuracy: 0.9091
+Epoch 148/150
+ - 28s - loss: 0.1313 - accuracy: 0.9540 - val_loss: 0.1876 - val_accuracy: 0.9020
+Epoch 149/150
+ - 28s - loss: 0.1129 - accuracy: 0.9602 - val_loss: 0.3682 - val_accuracy: 0.9138
+Epoch 150/150
+ - 28s - loss: 0.1220 - accuracy: 0.9591 - val_loss: 0.5694 - val_accuracy: 0.9047
+
+/home/ci411/pcen-t-varying/pcen_t/utils.py:63: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:707: RuntimeWarning: Can save best model only with val_dynamic/tags_acc available, skipping.
+  'skipping.' % (self.monitor), RuntimeWarning)
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:1042: RuntimeWarning: Reduce LR on plateau conditioned on metric `val_dynamic/tags_acc` which is not available. Available metrics are: val_loss,val_accuracy,loss,accuracy,lr
+  (self.monitor, ','.join(list(logs.keys()))), RuntimeWarning
+/home/ci411/.conda/envs/py3.5/lib/python3.6/site-packages/keras/callbacks/callbacks.py:846: RuntimeWarning: Early stopping conditioned on metric `val_dynamic/tags_acc` which is not available. Available metrics are: val_loss,val_accuracy,loss,accuracy,lr
+  (self.monitor, ','.join(list(logs.keys()))), RuntimeWarning
+Done training. Saving results to disk...
+Saving Weights
+2020-02-10 15:25:34.437797: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-02-10 15:25:34.489196: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 15:25:34.489601: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:25:34.491053: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 15:25:34.492368: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 15:25:34.492694: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 15:25:34.494317: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 15:25:34.495592: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 15:25:34.499237: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 15:25:34.501531: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 15:25:34.501809: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-02-10 15:25:34.507654: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2400000000 Hz
+2020-02-10 15:25:34.507814: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5e24d20 executing computations on platform Host. Devices:
+2020-02-10 15:25:34.507830: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-02-10 15:25:34.628605: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5e27230 executing computations on platform CUDA. Devices:
+2020-02-10 15:25:34.628638: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Tesla V100-SXM2-16GB, Compute Capability 7.0
+2020-02-10 15:25:34.629905: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 15:25:34.629949: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:25:34.629960: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 15:25:34.629970: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 15:25:34.629980: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 15:25:34.629990: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 15:25:34.630000: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 15:25:34.630010: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 15:25:34.632150: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 15:25:34.632181: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:25:34.634055: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-02-10 15:25:34.634067: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-02-10 15:25:34.634072: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-02-10 15:25:34.636690: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15023 MB memory) -> physical GPU (device: 0, name: Tesla V100-SXM2-16GB, pci bus id: 0000:1c:00.0, compute capability: 7.0)
+2020-02-10 15:25:36.796870: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 15:25:37.079750: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 15:25:38.644193: W tensorflow/stream_executor/cuda/redzone_allocator.cc:312] Not found: ./bin/ptxas not found
+Relying on driver to perform ptx compilation. This message will be only logged once.
+Using TensorFlow backend.
+/home/ci411/pcen-t-varying/pcen_t/utils.py:63: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+Accuracy: 0.769866959264847
+Segment based metrics
+========================================
+  Evaluated length                  : 136056.27 sec
+  Evaluated files                   : 14000 
+  Segment length                    : 1.00 sec
+
+  Overall metrics (micro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 18.74 %
+    Precision                       : 18.36 %
+    Recall                          : 19.13 %
+  Error rate
+    Error rate (ER)                 : 1.23 
+    Substitution rate               : 0.43 
+    Deletion rate                   : 0.38 
+    Insertion rate                  : 0.42 
+  Accuracy
+    Sensitivity                     : 19.13 %
+    Specificity                     : 86.30 %
+    Balanced accuracy               : 52.72 %
+    Accuracy                        : 76.99 %
+
+  Class-wise average metrics (macro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 16.51 %
+    Precision                       : 42.58 %
+    Recall                          : 20.31 %
+  Error rate
+    Error rate (ER)                 : 1.74 
+    Deletion rate                   : 0.80 
+    Insertion rate                  : 0.95 
+  Accuracy
+    Sensitivity                     : 20.31 %
+    Specificity                     : 86.50 %
+    Balanced accuracy               : 53.40 %
+    Accuracy                        : 76.99 %
+  
+
+  Class-wise metrics
+  ======================================
+    Event label  | Nref    Nsys  | F        Pre      Rec    | ER       Del      Ins    | Sens     Spec     Bacc     Acc     
+    ------------ | -----   ----- | ------   ------   ------ | ------   ------   ------ | ------   ------   ------   ------  
+    air_condit.. | 19405   4064  | 14.1%    40.7%    8.5%   | 1.04     0.91     0.12   | 8.5%     98.0%    53.2%    85.4%   
+    car_horn     | 15995   114.. | 21.5%    12.3%    87.7%  | 6.40     0.12     6.28   | 87.7%    18.1%    52.9%    26.1%   
+    children_p.. | 20801   1894  | 10.3%    61.9%    5.6%   | 0.98     0.94     0.03   | 5.6%     99.4%    52.5%    85.3%   
+    dog_bark     | 18939   22587 | 19.4%    17.9%    21.3%  | 1.77     0.79     0.98   | 21.3%    84.5%    52.9%    75.8%   
+    drilling     | 20205   9154  | 21.6%    34.7%    15.7%  | 1.14     0.84     0.30   | 15.7%    94.9%    55.3%    83.4%   
+    engine_idl.. | 20837   2928  | 13.6%    55.2%    7.8%   | 0.99     0.92     0.06   | 7.8%     98.9%    53.3%    85.2%   
+    gun_shot     | 16528   831   | 8.1%     84.1%    4.2%   | 0.97     0.96     0.01   | 4.2%     99.9%    52.1%    88.5%   
+    jackhammer   | 19290   2251  | 15.5%    74.0%    8.6%   | 0.94     0.91     0.03   | 8.6%     99.5%    54.1%    86.9%   
+    siren        | 20216   10332 | 17.6%    26.1%    13.3%  | 1.24     0.87     0.38   | 13.3%    93.5%    53.4%    81.8%   
+    street_music | 19920   31739 | 23.3%    19.0%    30.2%  | 1.99     0.70     1.29   | 30.2%    78.3%    54.3%    71.4%   
+
+
+Saving results to /beegfs/ci411/pcen/models/models_210/test1b_batchsize/results.json
+Done!
+2020-02-10 15:59:57.606684: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-02-10 15:59:57.657827: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 15:59:57.658300: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:59:57.659821: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 15:59:57.661217: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 15:59:57.661640: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 15:59:57.663287: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 15:59:57.664634: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 15:59:57.668396: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 15:59:57.670675: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 15:59:57.670956: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2020-02-10 15:59:57.677238: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2400000000 Hz
+2020-02-10 15:59:57.677395: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x671c520 executing computations on platform Host. Devices:
+2020-02-10 15:59:57.677410: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2020-02-10 15:59:57.795781: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x671ea30 executing computations on platform CUDA. Devices:
+2020-02-10 15:59:57.795813: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Tesla V100-SXM2-16GB, Compute Capability 7.0
+2020-02-10 15:59:57.797084: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1c:00.0
+2020-02-10 15:59:57.797127: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:59:57.797138: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 15:59:57.797148: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-02-10 15:59:57.797158: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-02-10 15:59:57.797169: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-02-10 15:59:57.797179: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-02-10 15:59:57.797189: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 15:59:57.799343: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-02-10 15:59:57.799376: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-02-10 15:59:57.801224: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-02-10 15:59:57.801235: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-02-10 15:59:57.801240: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-02-10 15:59:57.803881: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15023 MB memory) -> physical GPU (device: 0, name: Tesla V100-SXM2-16GB, pci bus id: 0000:1c:00.0, compute capability: 7.0)
+2020-02-10 15:59:59.797458: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-02-10 16:00:00.072923: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-02-10 16:00:01.611050: W tensorflow/stream_executor/cuda/redzone_allocator.cc:312] Not found: ./bin/ptxas not found
+Relying on driver to perform ptx compilation. This message will be only logged once.
+Using TensorFlow backend.
+/home/ci411/pcen-t-varying/pcen_t/utils.py:63: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  data[k] = v.value
+Accuracy: 0.8654865346214042
+Segment based metrics
+========================================
+  Evaluated length                  : 17881.70 sec
+  Evaluated files                   : 2000 
+  Segment length                    : 1.00 sec
+
+  Overall metrics (micro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 50.09 %
+    Precision                       : 56.37 %
+    Recall                          : 45.06 %
+  Error rate
+    Error rate (ER)                 : 0.67 
+    Substitution rate               : 0.23 
+    Deletion rate                   : 0.32 
+    Insertion rate                  : 0.12 
+  Accuracy
+    Sensitivity                     : 45.06 %
+    Specificity                     : 93.86 %
+    Balanced accuracy               : 69.46 %
+    Accuracy                        : 86.55 %
+
+  Class-wise average metrics (macro-average)
+  ======================================
+  F-measure
+    F-measure (F1)                  : 49.65 %
+    Precision                       : 60.61 %
+    Recall                          : 44.63 %
+  Error rate
+    Error rate (ER)                 : 0.89 
+    Deletion rate                   : 0.55 
+    Insertion rate                  : 0.34 
+  Accuracy
+    Sensitivity                     : 44.63 %
+    Specificity                     : 93.83 %
+    Balanced accuracy               : 69.23 %
+    Accuracy                        : 86.55 %
+  
+
+  Class-wise metrics
+  ======================================
+    Event label  | Nref    Nsys  | F        Pre      Rec    | ER       Del      Ins    | Sens     Spec     Bacc     Acc     
+    ------------ | -----   ----- | ------   ------   ------ | ------   ------   ------ | ------   ------   ------   ------  
+    air_condit.. | 2798    4007  | 48.3%    41.0%    58.7%  | 1.26     0.41     0.84   | 58.7%    85.0%    71.8%    81.0%   
+    car_horn     | 2328    1190  | 49.9%    73.8%    37.7%  | 0.76     0.62     0.13   | 37.7%    98.1%    67.9%    90.5%   
+    children_p.. | 2997    1894  | 48.0%    61.9%    39.1%  | 0.85     0.61     0.24   | 39.1%    95.4%    67.2%    86.3%   
+    dog_bark     | 2740    1822  | 33.2%    41.5%    27.6%  | 1.11     0.72     0.39   | 27.6%    93.3%    60.4%    83.6%   
+    drilling     | 2912    2485  | 57.7%    62.7%    53.5%  | 0.78     0.46     0.32   | 53.5%    94.1%    73.8%    87.7%   
+    engine_idl.. | 3009    2928  | 54.5%    55.2%    53.7%  | 0.90     0.46     0.44   | 53.7%    91.6%    72.6%    85.4%   
+    gun_shot     | 2385    751   | 43.9%    91.6%    28.8%  | 0.74     0.71     0.03   | 28.8%    99.6%    64.2%    90.5%   
+    jackhammer   | 2780    2251  | 66.2%    74.0%    59.9%  | 0.61     0.40     0.21   | 59.9%    96.3%    78.1%    90.8%   
+    siren        | 2911    2340  | 49.7%    55.8%    44.9%  | 0.91     0.55     0.36   | 44.9%    93.4%    69.1%    85.8%   
+    street_music | 2889    2517  | 45.1%    48.4%    42.2%  | 1.03     0.58     0.45   | 42.2%    91.7%    66.9%    84.0%   
+
+
+Saving results to /beegfs/ci411/pcen/models/models_210/test1b_batchsize/results_dry.json
+Done!
