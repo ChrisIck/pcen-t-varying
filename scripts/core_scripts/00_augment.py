@@ -6,9 +6,11 @@ from joblib import Parallel, delayed
 import scipy
 import muda
 from muda.deformers.ir import IRConvolution
+from tqdm import tqdm
+import jams
 
-sys.path.append('..')
-from utils import *
+sys.path.append('/home/ci411/pcen-t-varying/')
+from pcen_t.utils import *
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(description=__doc__)
@@ -32,7 +34,13 @@ def process_arguments(args):
     parser.add_argument('--jobs', dest='n_jobs', type=int,
                         default=4,
                         help='Number of jobs to run in parallel')
+    
+    parser.add_argument('--augmentation', dest='augmentation', type=str,
+                        default='reverb',
+                        help='Specify IR augmentation ("reverb") or pitch shift ("pitch")')
 
+    parser.add_argument('--semitones', dest='semitones', type=int, default=2,
+                        help='Number of semitones to deform by')
     
     return parser.parse_args(args)
 
@@ -60,31 +68,55 @@ class IRConvolution_normalized(IRConvolution):
             mudabox._audio["y"], y_ir, mode="full"
         )
         mudabox._audio['y'] = lr.util.normalize(mudabox._audio['y'])
+        
+def pitch_shift(n_semitones):
+    '''Construct a MUDA pitch shifter'''
+
+    tones = [0]
+    for n in range(1, n_semitones+1):
+        tones.extend([-n, n])
+
+    shifter = muda.deformers.PitchShift(n_semitones=tones)
+
+    return shifter
+        
 
 if __name__ == '__main__':
     params = process_arguments(sys.argv[1:])
     
     all_ir_files = [os.path.join(params.ir_dir, file) for file in os.listdir(params.ir_dir)]
-    out_dict = {i:base(name) for i, name in enumerate(os.listdir(params.ir_dir))}
-    ir_deformer = IRConvolution_normalized(all_ir_files)
-
-    train_pairs= get_ann_audio(os.path.join(params.audio_dir,'train'), os.path.join(params.ann_dir,'train'))
-    validate_pairs= get_ann_audio(os.path.join(params.audio_dir,'validate'), os.path.join(params.ann_dir,'validate'))
-    test_pairs= get_ann_audio(os.path.join(params.audio_dir,'test'), os.path.join(params.ann_dir,'test'))
     
-    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, ir_deformer,\
+        
+    if params.augmentation=='reverb':
+        deformer = IRConvolution_normalized(all_ir_files)
+        out_dict = {i:base(name) for i, name in enumerate(os.listdir(params.ir_dir))}
+    elif params.augmentation=='pitch':
+        deformer = pitch_shift(params.semitones)
+        
+        tones = [0]
+        for n in range(1, params.semitones+1):
+            tones.extend([-n, n])        
+        out_dict = {i:str(shift) for i, shift in enumerate(tones)}
+
+    train_pairs = tqdm(get_ann_audio(os.path.join(params.audio_dir,'train'), os.path.join(params.ann_dir,'train')), desc="training data")
+    validate_pairs = tqdm(get_ann_audio(os.path.join(params.audio_dir,'validate'), os.path.join(params.ann_dir,'validate')), desc="validation data")
+    test_pairs = tqdm(get_ann_audio(os.path.join(params.audio_dir,'test'), os.path.join(params.ann_dir,'test')), desc="testing data")
+    
+    
+    
+    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, deformer,\
                                os.path.join(params.output_dir,'audio','train'),\
                                os.path.join(params.output_dir,'annotations','train'),\
                                out_dict)\
                                for aud, ann in train_pairs)
 
-    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, ir_deformer,\
+    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, deformer,\
                                os.path.join(params.output_dir,'audio','validate'),\
                                os.path.join(params.output_dir,'annotations','validate'),\
                                out_dict)\
                                for aud, ann in validate_pairs)
 
-    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, ir_deformer,\
+    Parallel(n_jobs=params.n_jobs)(delayed(deform_audio)(aud, ann, deformer,\
                                os.path.join(params.output_dir,'audio','test'),\
                                os.path.join(params.output_dir,'annotations','test'),\
                                out_dict)\

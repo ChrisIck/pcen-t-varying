@@ -442,8 +442,10 @@ def samples_to_df(OUTPUT_PATH, versions, sort=False, classes=URBANSED_CLASSES, m
             with open(results_file, 'r') as fp:
                 results = json.load(fp)
             
-            strong_f = results['class_wise_average']['f_measure']
-            strong_e = results['class_wise_average']['error_rate']
+            strong_f = results['class_wise_average']['f_measure'] #macro-averaged
+            strong_e = results['class_wise_average']['error_rate'] #macro-averaged
+            #strong_f = results['overall']['f_measure'] #micro-averaged
+            #strong_e = results['overall']['error_rate'] #micro-averaged
             strong_c = results['class_wise'] 
                 
             data = [

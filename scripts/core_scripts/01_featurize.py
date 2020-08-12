@@ -5,10 +5,11 @@ import pumpp
 import shutil
 import pickle
 from joblib import Parallel, delayed
+from tqdm import tqdm
 
-sys.path.append('..')
-from pcen_pump import * #custom pcen pump objects
-from utils import *
+sys.path.append('/home/ci411/pcen-t-varying/')
+from pcen_t.utils import *
+from pcen_t.pcen_pump import *
 
 URBANSED_CLASSES = ['air_conditioner',
                     'car_horn',
@@ -128,6 +129,12 @@ if __name__ == '__main__':
     make_dirs(train_features)
     make_dirs(valid_features)
     make_dirs(test_features)
+    
+    #add loading bars
+    train_pairs = tqdm(train_pairs, desc="training data")
+    validate_pairs = tqdm(validate_pairs, desc="validation data")
+    test_pairs = tqdm(test_pairs, desc="test data")
+    
         
     print('Featurizing Audio...')
     #convert audio

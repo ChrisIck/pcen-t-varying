@@ -42,7 +42,7 @@ def save_h5(filename, **kwargs):
         hf.update(kwargs)
 
 
-def load_h5(filename):
+def load_h5(filename, trim=862):
     '''Load data from an hdf5 file created by `save_h5`.
     Parameters
     ----------
@@ -60,11 +60,18 @@ def load_h5(filename):
 
     def collect(k, v):
         if isinstance(v, h5py.Dataset):
-            data[k] = v.value
+            data[k] = v[()]
 
     with h5py.File(filename, mode='r') as hf:
         hf.visititems(collect)
-
+        
+    field = list(data.keys())[0]
+    if trim is not None:
+        if len(data[field].shape)==3:
+            data[field] = data[field][:,:trim,:,np.newaxis]
+        else:
+            data[field] = data[field][:,:trim,:,:]
+        data['dynamic/tags'] = data['dynamic/tags'][:,:trim-1,:]
     return data
 
 def convert(aud, jam, pump, outdir):
@@ -99,7 +106,6 @@ def get_ann_audio(aud_loc, ann_loc):
 
 def load_pump(pump_loc):
     with open(pump_loc, 'rb') as fd:
-        print(pump_loc)
         pump = pickle.load(fd)
     return pump
 
@@ -121,11 +127,38 @@ def build_dirs(loc):
         os.makedirs(loc)
 
 def max_pool(data, N=4):
+    if len(data.shape)==2:
+        n_time, n_channels = data.shape
+        data.reshape(1,n_time, n_channels)
     for _ in range(N):
-        N_data, n_channels = data.shape
-        new_data = np.empty((N_data//2,n_channels))
-        for i in range((N_data//2)):
-            for j in range(n_channels):
-                new_data[i,j] = max(data[2*i,j], data[(2*i)+1,j])
+        n_samples, n_time, n_channels = data.shape
+        new_data = np.empty((n_samples, n_time//2,n_channels))
+        for i in range((n_time//2)):
+            new_data[:,i,:] = np.amax(data[:,2*i:(2*i)+1,:], axis=1)
         data = new_data
-    return np.array([data])
+    return data
+
+def convert_ts_to_dict(predictions, labels,threshold=None, real_length = 10.):
+    predictions = predictions.T
+    out_dicts = []
+    sr = real_length/predictions.shape[1]
+    
+    for i, label in enumerate(labels):
+        if threshold is not None:
+            high_low_array = (predictions[i]>threshold).astype(int)
+        else:
+            high_low_array = predictions[i]
+            
+        label_data = np.concatenate((np.zeros(1), high_low_array, np.zeros(1)))
+        onsets = np.argwhere(np.diff(label_data)==1) -1
+        offsets = np.argwhere(np.diff(label_data)==-1) -1
+
+        
+        for i in range(len(onsets)):
+            new_dict = {}
+            new_dict['event_label']=label
+            new_dict['event_onset']=onsets[i][0]*sr
+            new_dict['event_offset']=offsets[i][0]*sr
+            new_dict['scene_label']= 'UrbanSED'
+            out_dicts.append(new_dict)
+    return out_dicts

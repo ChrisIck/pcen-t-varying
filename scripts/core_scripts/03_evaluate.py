@@ -1,3 +1,4 @@
+import os
 import sed_eval
 import json
 import argparse
@@ -5,6 +6,7 @@ from keras.models import model_from_yaml
 import sys
 import numpy as np
 import ast
+from tqdm import tqdm
 
 import sys
 sys.path.append('/home/ci411/pcen-t-varying/')
@@ -24,36 +26,46 @@ URBANSED_CLASSES = ['air_conditioner',
                     'siren',
                     'street_music']
 
-def score_model(test_features, feature_names, model, labels, slices=None):
+def score_model(test_features, feature_names, model, labels, slices=None, sample_size=None, verbose=True, rng=None):
         
     segment_based_metrics = sed_eval.sound_event.SegmentBasedMetrics(
         event_label_list=labels)
-
     for feature_name in feature_names:
         working_dir = os.path.join(test_features, feature_name, 'test')
-        for filename in os.listdir(working_dir):
+        all_files = os.listdir(working_dir)
+        
+        if sample_size==None:
+            sample_files = all_files
+        else:
+            if rng is not None:
+                sample_files = rng.choice(all_files, size=sample_size)
+            else:
+                sample_files = np.random.choice(all_files, size=sample_size)
+        
+        for filename in sample_files:
             test_feature_loc = os.path.join(working_dir, filename)
             test_feature = load_h5(test_feature_loc)
+            field = (list(test_feature.keys()))[0]
             if slices is not None:
-                datum = test_feature['PCEN/mag'][:,:,:,slices]
+                datum = test_feature[field][:,:,:,slices]
             else:
-                datum = test_feature['PCEN/mag']
+                datum = test_feature[field]
 
-            ytrue = max_pool(test_feature['dynamic/tags'][0])[0]
+            #ytrue = max_pool(test_feature['dynamic/tags'])
+            ytrue = test_feature['dynamic/tags']
             ypred = model.predict(datum)[0]
 
             ytrue_dict = convert_ts_to_dict(ytrue, labels, filename)
-            ypred_dict = convert_ts_to_dict(ypred, labels, filename, threshold=0.5)
+            ypred_dict = convert_ts_to_dict(ypred, labels, filename, threshold=0.5) #probably fine
 
             segment_based_metrics.evaluate(reference_event_list=ytrue_dict,\
                                            estimated_event_list=ypred_dict)
 
-    # Get only certain metrics
-    overall_segment_based_metrics = segment_based_metrics.results_overall_metrics()
-    print("Accuracy:", overall_segment_based_metrics['accuracy']['accuracy'])
+
 
     # Or print all metrics as reports
-    print(segment_based_metrics)
+    if verbose:
+        print(segment_based_metrics)
     
     segment_results = segment_based_metrics.results()
 
@@ -70,8 +82,8 @@ def convert_ts_to_dict(predictions, labels, fname, threshold=None, real_length =
             high_low_array = (predictions[i]>threshold).astype(int)
         else:
             high_low_array = predictions[i]
-            
-        label_data = np.concatenate((np.zeros(1), high_low_array, np.zeros(1)))
+        
+        label_data = np.concatenate((np.zeros(1), high_low_array.flatten(), np.zeros(1)))
         onsets = np.argwhere(np.diff(label_data)==1) -1
         offsets = np.argwhere(np.diff(label_data)==-1) -1
 
@@ -117,6 +129,18 @@ def process_arguments(args):
                        default='/beegfs/ci411/pcen/URBAN-SED_v2.0.0/index_test.json',
                        help='Location of train/test split index')
     
+    parser.add_argument('--sample-size', dest='sample_size', type=int,
+                       default=100,
+                       help='Number of samples to evaluate on')
+    
+    parser.add_argument('--n-samples', dest='n_samples', type=int,
+                       default=None,
+                       help='Number of samples to take')
+    
+    parser.add_argument('--random-seed', dest='random_seed', type=int,
+                       default=20200805,
+                       help='Random Seed')
+    
 
     return parser.parse_args(args)
 
@@ -145,13 +169,30 @@ if __name__ == '__main__':
         slices = ast.literal_eval(params.slices)
     else:
         slices = params.slices
-        
-    results = score_model(test_features, feature_names, model, URBANSED_CLASSES, slices=slices)
-        
-    # Save results to disk
-    results_file = os.path.join(params.model_dir, params.modelid, params.results_name + '.json')
-    print("Saving results to {}".format(results_file))
-    with open(results_file, 'w') as fp:
-        json.dump(results, fp, indent=2)
+    
+    
+    rng = np.random.RandomState(seed=params.random_seed)
 
-    print('Done!')
+    print("Scoring Model")
+    if params.n_samples is None:
+        results = score_model(test_features, feature_names, model, URBANSED_CLASSES, slices=slices, verbose=True, rng=rng)
+        # Save results to disk
+        results_file = os.path.join(params.model_dir, params.modelid, params.results_name + '.json')
+        print("Saving results to {}".format(results_file))
+        with open(results_file, 'w') as fp:
+            json.dump(results, fp, indent=2)
+
+        print('Done!')
+                              
+    else:
+        sample_path = os.path.join(params.model_dir, params.modelid, 'sampled_results')
+        if not os.path.exists(sample_path):
+            os.makedirs(sample_path)
+        
+        for i in tqdm(range(params.n_samples), desc="Re-sample"):
+            results =  score_model(test_features, feature_names, model, URBANSED_CLASSES, slices=slices, sample_size=params.sample_size, rng=rng)
+            results_file = os.path.join(sample_path, params.results_name + '_{}.json'.format(i))
+            with open(results_file, 'w') as fp:
+                json.dump(results, fp, indent=2)
+        print("Saved {} results to {}".format(params.n_samples, sample_path))
+        print('Done!')

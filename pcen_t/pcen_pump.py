@@ -1,7 +1,7 @@
 #Building a pumpp Feature Extractor for PCEN, and for PCEN varying T
 import numpy as np
 from pumpp import FeatureExtractor
-from librosa import pcen, amplitude_to_db, get_duration
+from librosa import pcen, amplitude_to_db, get_duration, samples_to_frames
 from librosa.feature import melspectrogram
 
 def to_dtype(x, dtype):
@@ -47,13 +47,14 @@ class PCEN(FeatureExtractor):
         The data type for the output features.  Default is `float32`.
         Setting to `uint8` will produce quantized features.
     '''
-    def __init__(self, name, sr, hop_length, log=False, n_mels = 128,
+    def __init__(self, name, sr, hop_length, log=False, n_mels=128, n_fft=1024,
                  dtype='float32', conv='channels_last'):
 
         super(PCEN, self).__init__(name, sr, hop_length, dtype=dtype, conv=conv)
 
         self.log = log
         self.n_mels = n_mels
+        self.n_fft = n_fft
         self.register('mag', n_mels, self.dtype)
 
     def transform_audio(self, y):
@@ -71,7 +72,7 @@ class PCEN(FeatureExtractor):
         n_frames = self.n_frames(get_duration(y=y, sr=self.sr))
         
         S = melspectrogram(y=y, sr=self.sr, hop_length=self.hop_length,
-                          n_mels=self.n_mels)
+                          n_mels=self.n_mels, n_fft=self.n_fft)
         
         if self.log:
             S = amplitude_to_db(S, ref=np.max)
@@ -103,13 +104,14 @@ class PCEN_T(FeatureExtractor):
         The data type for the output features.  Default is `float32`.
         Setting to `uint8` will produce quantized features.
     '''
-    def __init__(self, name, sr, hop_length, log=False, n_mels = 128, n_t_constants = 8,
-                 dtype='float32', conv='channels_last'):
+    def __init__(self, name, sr, hop_length, log=False, n_mels=128, n_fft=1024,
+                 n_t_constants=8, dtype='float32', conv='channels_last'):
 
-        super(PCEN_T, self).__init__(name, sr, hop_length, dtype=dtype, conv=conv) #not sure what this does
+        super(PCEN_T, self).__init__(name, sr, hop_length, dtype=dtype, conv=conv) 
 
         self.log = log
         self.n_mels = n_mels
+        self.n_fft = n_fft
         self.n_t_constants = n_t_constants
         self.register('mag', n_mels, self.dtype, channels=n_t_constants)
 
@@ -125,14 +127,20 @@ class PCEN_T(FeatureExtractor):
             data['mag'] : np.ndarray, shape = (n_frames, n_bins)
                 The PCEN magnitude
         '''
+    
+        
+        #extract proper shape
+        S_test = melspectrogram(y=y, sr=self.sr, hop_length=self.hop_length,
+                          n_fft=self.n_fft, n_mels=self.n_mels)
+        P_test = pcen(S_test, sr=self.sr, hop_length=self.hop_length, time_constant = 1)
+        n_frames = P_test.shape[1]
+        
         
         #double audio and reverse pad to prevent zero initial-energy assumption
         y = np.concatenate((y[::-1],y))
-
-        #n_frames = self.n_frames(get_duration(y=y, sr=self.sr))
         
         S = melspectrogram(y=y, sr=self.sr, hop_length=self.hop_length,
-                          n_mels=self.n_mels)
+                          n_fft=self.n_fft, n_mels=self.n_mels)
         if self.log:
             S = amplitude_to_db(S, ref=np.max)
         
@@ -142,7 +150,8 @@ class PCEN_T(FeatureExtractor):
         
         for T in t_constants:   
             P = pcen(S, sr=self.sr, hop_length=self.hop_length, time_constant = T)
-            P = P[:,P.shape[1]//2:] #remove padded section
+            #source of off-by-one error:
+            P = P[:,P.shape[1]-n_frames+1:]#remove padded section
             P = to_dtype(P, self.dtype)
             pcen_layers.append(P)
             
