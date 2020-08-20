@@ -225,26 +225,11 @@ if __name__ == '__main__':
     pump = load_pump(os.path.join(params.load_pump, 'pump.pkl'))
     field = list(pump.fields.keys())[0]
     
-    
-    print("Generating Samplers...")
-    sampler = make_sampler(params.max_samples, params.duration, pump, params.seed)
-   
-    val_size = params.validation_size * len(feature_list)
-
-    sampler_val = make_sampler(1, params.duration, pump, params.seed)
-
     if params.slices is not None:
         slices = ast.literal_eval(params.slices)
     else:
         slices = None
         
-    gen_train = data_generator(train_features, sampler, params.train_streamers,\
-                               params.rate, random_state=params.seed, slices=slices,\
-                               batch_size=params.batch_size)
-    
-    gen_val = data_generator_val(valid_features, sampler_val, random_state=params.seed, slices=slices,\
-                                 batch_size=params.batch_size)
-    
     print("Constructing model...")
     construct_model = MODELS[params.modelname]
     
@@ -257,19 +242,32 @@ if __name__ == '__main__':
 
     output_vars = 'dynamic/tags'
     
-    #create data generators
+    
+    print("Generating Samplers...")
+    sampler = make_sampler(params.max_samples, params.duration, pump, params.seed)
+   
+    val_size = params.validation_size * len(feature_list)
+    sampler_val = make_sampler(1, params.duration, pump, params.seed)
+
+    gen_train = data_generator(train_features, sampler, params.train_streamers,\
+                               params.rate, random_state=params.seed, slices=slices,\
+                               batch_size=params.batch_size)
+    
+    gen_val = data_generator_val(valid_features, sampler_val, random_state=params.seed, slices=slices,\
+                                 batch_size=params.batch_size)
+
     gen_train = keras_tuples(gen_train(), inputs=inputs, outputs=output_vars)
     
     gen_val = keras_tuples(gen_val(), inputs=inputs, outputs=output_vars)
-    
-    loss = {output_vars: 'binary_crossentropy'}
-    metrics = {output_vars: 'accuracy'}
-    monitor = 'val_{}_acc'.format(output_vars)
     
     gen_train_label = label_transformer_generator(gen_train)
     gen_val_label = label_transformer_generator(gen_val)
     
     print("Compiling model...")
+    loss = {output_vars: 'binary_crossentropy'}
+    metrics = {output_vars: 'accuracy'}
+    monitor = 'val_{}_acc'.format(output_vars)
+    
     model.compile(K.optimizers.Adam(learning_rate=params.learning_rate), loss=loss, metrics=metrics)
     
     # Construct the weight path

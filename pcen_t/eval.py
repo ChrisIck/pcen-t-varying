@@ -495,3 +495,33 @@ def melt_sample_df(df, id_labels=default_ids):
     melted_df.drop(columns=['class/metric'])
     return melted_df
 
+def plot_preds(model_path, feature_path, label_ax=None, spec_ax=None, slices=[0], plot_slice=0):
+    #load models
+    with open(os.path.join(model_path,'model.yaml'), 'r') as model_yaml:
+        model = model_from_yaml(model_yaml.read(), custom_objects={'SqueezeLayer':SqueezeLayer})
+        model.load_weights(os.path.join(model_path,'model.h5'))
+    
+    #load features
+    all_data = load_h5(feature_path)
+    data_key = ''
+    
+    #extract key for features
+    for key in list(all_data.keys()):
+        if 'mag' in key:
+            data_key = key
+    data = all_data[data_key]
+    
+    #extract/pool labels
+    labels = max_pool(all_data['dynamic/tags'])[0]
+
+    #compute predictions
+    preds = model.predict(data[:,:,:,slices])[0]
+    
+    #plot results
+    if label_ax is not None:
+        specshow(preds.T, ax=label_ax, sr=22050, hop_length=1024*16)
+        label_ax.set_yticks(np.arange(len(URBANSED_CLASSES))+.5)
+        label_ax.set_yticklabels(labels=URBANSED_CLASSES)
+        
+    if spec_ax is not None:
+        specshow(data[0,:,:,plot_slice].T, ax=spec_ax, x_axis='time', sr=22050, hop_length=1024)
