@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.random
 import librosa as lr
 import pescador
 from tqdm import tqdm
@@ -12,6 +13,7 @@ import sys
 import os
 import argparse
 import ast
+import glob
 from keras.layers import Input
 
 import sys
@@ -41,12 +43,13 @@ def make_sampler(max_samples, duration, pump, seed):
     n_frames = lr.time_to_frames(duration,
                                  sr=pump[op].sr,
                                  hop_length=pump[op].hop_length)
+    '''MODIFIED in model fix branch'''
+    n_frames = (n_frames // 16) * 16
 
     return pump.sampler(max_samples, n_frames, random_state=seed)
 
 
-@pescador.streamable
-def data_sampler(fname, sampler, slices):
+def data_sampler(fname, sampler, slices=None):
     '''Generate samples from a specified h5 file'''
     data_dict = load_h5(fname)
     field = list(pump.fields.keys())[0]
@@ -54,47 +57,39 @@ def data_sampler(fname, sampler, slices):
         data_dict[field] = data_dict[field][:,:,:,slices]
     file_sampler = sampler(data_dict)
     for datum in file_sampler:
-        yield datum            
+        yield datum
 
-    
-def data_generator(directories, sampler, k, rate, batch_size=32, slices=None, **kwargs):
+        
+def data_generator(working, tracks, sampler, k, batch_size=32, slices=None, **kwargs):
     '''Generate a data stream from a collection of tracks and a sampler'''
 
     seeds = []
-    for working in directories:
-        for track in find_files(working,ext='h5'):
-            fname = os.path.join(working,track)
-            seeds.append(data_sampler(fname, sampler, slices))
+
+    for track in tqdm(tracks):
+        fname = working + os.path.extsep.join([str(track), 'h5'])
+        seeds.append(pescador.Streamer(data_sampler, fname, sampler, slices=slices))
+
     # Send it all to a mux
-    mux = pescador.StochasticMux(seeds, k, rate, mode='with_replacement', **kwargs)
+    '''updated!'''
+    mux = pescador.StochasticMux(seeds, k, **kwargs)
 
-    return mux
+    if batch_size == 1:
+        return mux
+    else:
+        return pescador.buffer_stream(mux, batch_size, axis=0)
 
-def data_generator_val(directories, sampler, batch_size=32, slices=None, **kwargs):
-    '''Generate a data stream from a collection of tracks and a sampler'''
-
-    seeds = []
-    total_files = 0
-    for working in directories:
-        for track in find_files(working,ext='h5'):
-            fname = os.path.join(working,track)
-            seeds.append(data_sampler(fname, sampler, slices))
-       
-    print("total files: {}".format(total_files))
-    # Send it all to a mux
-    mux = pescador.ChainMux(seeds, mode='cycle', **kwargs)
-
-    return mux
-   
     
 def keras_tuples(gen, inputs=None, outputs=None):
     for datum in gen:
         yield (datum[inputs], datum[outputs])
 
+        
 def label_transformer_generator(generator):
     for data in generator:
         features, labels = data
-        yield (features, max_pool(labels))
+        '''Modified on model fix'''
+        #yield (features, max_pool(labels))
+        yield (features, labels)
         
         
 class LossHistory(K.callbacks.Callback):
@@ -172,7 +167,7 @@ def process_arguments(args):
     
     parser.add_argument('--validation-size', dest='validation_size', type=int,
                         default=2000,
-                        help='validation steps per feature (per epoch)')
+                        help='Sampled number of validation datapoints, (all if set to none)')
 
     parser.add_argument('--verbose', dest='verbose', action='store_const',
                         const=True, default=False,
@@ -245,20 +240,45 @@ if __name__ == '__main__':
     
     print("Generating Samplers...")
     sampler = make_sampler(params.max_samples, params.duration, pump, params.seed)
-   
-    val_size = params.validation_size * len(feature_list)
-    sampler_val = make_sampler(1, params.duration, pump, params.seed)
-
-    gen_train = data_generator(train_features, sampler, params.train_streamers,\
-                               params.rate, random_state=params.seed, slices=slices,\
-                               batch_size=params.batch_size)
     
-    gen_val = data_generator_val(valid_features, sampler_val, random_state=params.seed, slices=slices,\
-                                 batch_size=params.batch_size)
-
-    gen_train = keras_tuples(gen_train(), inputs=inputs, outputs=output_vars)
+    files_train = []
+    files_val = []
     
-    gen_val = keras_tuples(gen_val(), inputs=inputs, outputs=output_vars)
+    for feat in train_features:
+        files = glob.glob(os.path.join(feat,'*.h5'))
+        files = [file.replace(params.training_dir, '').replace('.h5', '')\
+                 for file in files]
+        files_train = np.append(files_train,files)
+
+    for feat in valid_features:
+        files = glob.glob(os.path.join(feat,'*_0.h5'))
+        files = [file.replace(params.validation_dir, '').replace('.h5', '')\
+                 for file in files]
+        files_val = np.append(files_val,files)
+        
+    if params.validation_size is not None:
+        files_val = np.random.choice(files_val, size=params.validation_size,
+                                     replace=False)
+
+    
+    gen_train = data_generator(params.training_dir, files_train, sampler,
+                               params.train_streamers,
+                               rate=params.rate,
+                               batch_size=params.batch_size,
+                               random_state=params.seed,
+                               slices=slices)
+    
+    
+    gen_val = data_generator(params.validation_dir, files_val, sampler,
+                             params.train_streamers,
+                             rate=params.rate,
+                             batch_size=params.batch_size,
+                             random_state=params.seed,
+                             slices=slices)
+    
+    gen_train = keras_tuples(gen_train, inputs=inputs, outputs=output_vars)
+    
+    gen_val = keras_tuples(gen_val, inputs=inputs, outputs=output_vars)
     
     gen_train_label = label_transformer_generator(gen_train)
     gen_val_label = label_transformer_generator(gen_val)
@@ -266,7 +286,7 @@ if __name__ == '__main__':
     print("Compiling model...")
     loss = {output_vars: 'binary_crossentropy'}
     metrics = {output_vars: 'accuracy'}
-    monitor = 'val_{}_acc'.format(output_vars)
+    monitor = 'val_accuracy'
     
     model.compile(K.optimizers.Adam(learning_rate=params.learning_rate), loss=loss, metrics=metrics)
     
@@ -307,7 +327,7 @@ if __name__ == '__main__':
         verbosity = 2
 
     history = model.fit(gen_train_label, steps_per_epoch=params.epoch_size, epochs=params.epochs,
-                                  validation_data=gen_val_label, validation_steps=val_size,
+                                  validation_data=gen_val_label, validation_steps=params.validation_size,
                                   verbose=verbosity, callbacks=cb, max_queue_size=16)
     
     #make or clear output directory
@@ -325,9 +345,6 @@ if __name__ == '__main__':
     model_yaml = model.to_yaml()
     with open(modelyamlfile, 'w') as yaml_file:
         yaml_file.write(model_yaml)
-    
-    
-
 
     print('Done training. Saving results to disk...')
     # Save history
@@ -335,14 +352,4 @@ if __name__ == '__main__':
         pickle.dump(history.history, fd)
     print('Saving Weights')
     model.save_weights(weight_path)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
