@@ -112,13 +112,14 @@ def construct_cnnL3_7_strong(input_layer, pump):
     sq2 = SqueezeLayer(axis=2)(bn8) #changed axis from -2 to 2
 
     # Up-sample back to input frame rate
-
+    sq2_up = K.layers.UpSampling1D(size=2**4)(sq2)
+    
     n_classes = pump.fields['static/tags'].shape[0]
 
     p0 = K.layers.Dense(n_classes, activation='sigmoid',
                         bias_regularizer=K.regularizers.l2())
 
-    p_dynamic = K.layers.TimeDistributed(p0, name='dynamic/tags')(sq2)
+    p_dynamic = K.layers.TimeDistributed(p0, name='dynamic/tags')(sq2_up)
 
     model_outputs = ['dynamic/tags']
 

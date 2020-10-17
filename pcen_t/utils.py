@@ -65,7 +65,7 @@ def load_h5(filename, trim=862):
     with h5py.File(filename, mode='r') as hf:
         hf.visititems(collect)
         
-    field = list(data.keys())[0]
+    field = [item for item in list(data.keys()) if 'mag' in item][0]
     if trim is not None:
         if len(data[field].shape)==3:
             data[field] = data[field][:,:trim,:,np.newaxis]
