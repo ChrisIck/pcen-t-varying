@@ -4,7 +4,7 @@ sys.path.append('/home/ci411/pcen-t-varying/')
 
 import pcen_t.eval
 
-models_path = '/beegfs/ci411/pcen/models/models_1014/'
+models_path = '/scratch/ci411/pcen/models/models_1014/'
 
 sample_df = pcen_t.eval.samples_to_df(models_path, os.listdir(models_path))
 
